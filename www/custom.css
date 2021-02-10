@@ -1,0 +1,23 @@
+.main-header .logo {
+  font-family: "Franklin", Times, "Times New Roman", serif;
+  font-weight: bold;
+  font-size: 34px;
+}
+.content-wrapper {
+  background-color: #ffffff;
+}
+
+.box.box-solid.box-primary {
+  border: 0px;
+}
+
+.box.box-solid.box-primary>.box-header {
+  background-color: #eeeeee;
+  color: #000000;
+}
+
+.btn-default {
+    background-color: #afafaf;
+    color: #fff;
+    border-color: #afafaf;
+}
