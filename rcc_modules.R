@@ -40,7 +40,9 @@ make_map <- function(selection) {
 
 ## MAKE TABLE FUNCTION --------------------------------------
 make_table <- function(category){
+  print(category)
   category = stringr::str_replace_all(tolower(category), " ", "_")
+  print(category)
   selected_var <- unique(rcc_labels_data$count_name[rcc_labels_data$category == category])
   var_pretty_names <- unique(rcc_labels_data$drop_down_name[rcc_labels_data$category == category])
   
@@ -118,10 +120,9 @@ map_ui <- function(id) {
   
   # assemble UI elements
   tagList(
-    h4(strong("Iowa Map"), align = "left"),
-    p(),
-    h5(textOutput(ns("var"))),
+    h4(textOutput(ns("var"))),
     #h6(textOutput(ns("lab"))),
+    
     leafletOutput(ns("map"), width = "1000px")
     # Maybe use if statement to adjust for first page
   )
@@ -158,10 +159,11 @@ map_server <- function(id, selections) {
 ## DEFINE UI and SERVER FOR TABLE -------------------------------------------------------------
 table_ui <- function(id){
   ns <- NS(id)
+  table_title = stringr::str_replace_all(id, "_", " ") %>% stringr::str_replace_all("-table", " Data Table") %>% tools::toTitleCase()
   
   # assemble UI elements
   tagList(
-    h4(strong(id), align = "left"),
+    h4(strong(table_title), align = "left"),
     p(),
     #h5(textOutput(ns("var"))),
     #h6(textOutput(ns("lab"))),
@@ -173,10 +175,6 @@ table_server <- function(id, category) {
   moduleServer(
     id,
     function(input, output, session) {
-      # table <- reactive({
-      #   p <- make_table(category)
-      #   return(p)
-      # })
       
       table = reactive({
         return(make_table(category))
@@ -217,7 +215,7 @@ table_module_server <- function(id){
   moduleServer(
     id,
     function(input, output, session) {
-      tables <- table_server("table", category = category)
+      tables <- table_server("table", id)
     }
   )
 }
@@ -226,15 +224,18 @@ table_module_server <- function(id){
 category_module_ui <- function(id, category) {
   ns <- NS(id)
   
+  category_title = stringr::str_replace_all(category, "_", " ") %>% tools::toTitleCase()
+  
   tagList(
     ## row for text
     fluidRow(style = "margin: 6px", width = 12,
              column(12, align = "left",
-                    h3(strong("Relative Accessibility Maps")), 
+                    h3(strong(category_title)), 
                     p(), 
-                    p(strong("Select a topic using the map selector."),
-                      "The resulting maps will display the relative accesibility of remote work, remote education, and telemental health at county-level.",
-                      "Select the Data and Methods tab to learn more about how we constructed our composite measures."))
+                    p(strong("Select a variable using the map selector."),
+                      "The resulting maps will display the 30 Iowa cities with bubbles that correspond to the amount of the selected variable.",
+                      "Scroll over the bubbles to see the data and the city names.",
+                      "Select the Data Table tab on the left to see the values for all 30 cities, or the Data Methods tab to learn where we found the data."))
     ),
     ## row for selector & map
     fluidRow(style = "margin: 6px",

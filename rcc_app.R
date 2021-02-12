@@ -31,16 +31,24 @@ ui <- fluidPage(
   ),
   fluidRow(width = 12, align = "left",
            h1(strong("Iowa's Recovery Ready Community Network")),
-           style = "margin-left: 6px; margin-right: 6px; background-color: #373A3C; color: white"
+           style = "background-color: #373A3C; color: white; margin-left: auto; margin-right: auto"
   ),
   # titlePanel(
   #   title = "Iowa's Recovery Ready Community Network"
   # ),
   ## |_navigation bar ---------------------------------------------------------------------------------- 
-  navbarPage(title = NULL,
+  navbarPage(title = NULL, windowTitle = "Iowa's Recovery Ready Community Network",
              
     ## |__RRCI tab ---------------------------------------------------------------------------------            
     tabPanel("Recovery Ready Community Index",
+      fluidRow(style = "margin-left: 6px; margin-right: 6px", width = 12,
+               column(10, offset = 1,
+                      br(),
+                      h2(strong("Recovery Ready Community Index")),
+                      br(),
+                      h5("Placeholder Text")
+                      )
+               ),
       fluidRow(style = "margin-left: 6px; margin-right: 6px", width = 12,
         column(4, 
           br(), br(),
@@ -51,19 +59,22 @@ ui <- fluidPage(
           h2(strong("The Community Capitals Framework")),
           br(),
           h4("The Community Capitals Framework is based on the idea that communities have assets. 
-            These assets, or categorys, refer to the resources that support positive individual change (i.e. economic mobility) and community resilience. 
+            These assets, or categories, refer to the resources that support positive individual change (i.e. economic mobility) and community resilience. 
             Utility of the framework is the emphasis on assets, rather than deficits or needs. ")
         )
       ),
       fluidRow(style = "margin: 20px", width = 12,
-               category_module_ui("rrci", "rrci"))
+               column(10, offset = 1,
+               category_module_ui("rrci", "rrci")
+               )
+      )
     ),
     
     
     ## |__recovery_resources tab --------------------------------------------------------------------------------            
     tabPanel("Recovery Resources", 
       fluidRow(style = "margin: 6px; padding-top:20px; padding-bottom:20px;",
-        navlistPanel(widths = c(3, 9),
+        navlistPanel(widths = c(2, 10),
           tabPanel(title = "Maps and Indicators", category_module_ui("recovery_resources", "recovery_resources")),
           tabPanel(title = "Data Table", table_module_ui("recovery_resources", "recovery_resources")),
           tabPanel(title = "Data, Measures, and Methods", sources_ui("recovery_resources"))
@@ -73,7 +84,7 @@ ui <- fluidPage(
     ## |__primary_care_resources tab ------------------------------------------------------------------------------------            
     tabPanel("Primary Care Resources",
       fluidRow(style = "margin: 6px; padding-top:20px; padding-bottom:20px;",
-        navlistPanel(widths = c(3, 9),
+        navlistPanel(widths = c(2, 10),
           tabPanel(title = "Maps and Indicators", category_module_ui("primary_care_resources", "primary_care_resources")),
           tabPanel(title = "Data Table", table_module_ui("primary_care_resources", "primary_care_resources")),
           tabPanel(title = "Data, Measures, and Methods", sources_ui("primary_care_resources"))
@@ -83,7 +94,7 @@ ui <- fluidPage(
     ## |__social_and_economic_resources tab -----------------------------------------------------------------------------------            
     tabPanel("Social and Economic Resources",
       fluidRow(style = "margin: 6px; padding-top:20px; padding-bottom:20px;",
-        navlistPanel(widths = c(3, 9),
+        navlistPanel(widths = c(2, 10),
           tabPanel(title = "Maps and Indicators", category_module_ui("social_and_economic_resources", "social_and_economic_resources")),
           tabPanel(title = "Data Table", table_module_ui("social_and_economic_resources", "social_and_economic_resources")),
           tabPanel(title = "Data, Measures, and Methods", sources_ui("social_and_economic_resources"))
@@ -93,7 +104,7 @@ ui <- fluidPage(
     ## |__demographic_characteristics tab ------------------------------------------------------------------------------------            
     tabPanel("Demographic Characteristics",
       fluidRow(style = "margin: 6px; padding-top:20px; padding-bottom:20px;",
-        navlistPanel(widths = c(3, 9),
+        navlistPanel(widths = c(2, 10),
           tabPanel(title = "Maps and Indicators", category_module_ui("demographic_characteristics", "demographic_characteristics")),
           tabPanel(title = "Data Table", table_module_ui("demographic_characteristics", "demographic_characteristics")),
           tabPanel(title = "Data, Measures, and Methods", sources_ui("demographic_characteristics"))
@@ -103,7 +114,7 @@ ui <- fluidPage(
     ## |__ community_characteristics tab ---------------------------------------------------------------------------------            
     tabPanel("Community Characteristics",
       fluidRow(style = "margin: 6px; padding-top:20px; padding-bottom:20px;",
-        navlistPanel(widths = c(3, 9),
+        navlistPanel(widths = c(2, 10),
           tabPanel(title = "Maps and Indicators", category_module_ui("community_characteristics", "community_characteristics")),
           tabPanel(title = "Data Table", table_module_ui("community_characteristics", "community_characteristics")),
           tabPanel(title = "Data, Measures, and Methods", sources_ui("community_characteristics"))
