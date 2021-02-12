@@ -26,14 +26,22 @@ ui <- fluidPage(
   
   ## |_logo --------------------------------------------------------------------------------------------           
   fluidRow(width = 12, align = "center",
-    img(src = "capitals.jpg", class = "topimage", width = "98%", height = "600", style = "display: block; margin-left: auto; margin-right: auto;")
+    img(src = "reaching_out.jpg", class = "topimage", width = "98%", height = "600", style = "display: block; margin-left: auto; margin-right: auto;")
+    # Could use width = "1070" to keep from stretching
   ),
+  fluidRow(width = 12, align = "left",
+           h1(strong("Iowa's Recovery Ready Community Network")),
+           style = "margin-left: 6px; margin-right: 6px; background-color: #373A3C; color: white"
+  ),
+  # titlePanel(
+  #   title = "Iowa's Recovery Ready Community Network"
+  # ),
   ## |_navigation bar ---------------------------------------------------------------------------------- 
   navbarPage(title = NULL,
              
-    ## |__capitals tab ---------------------------------------------------------------------------------            
-    tabPanel("Community Capitals",
-      fluidRow(style = "margin: 6px", width = 12,
+    ## |__RRCI tab ---------------------------------------------------------------------------------            
+    tabPanel("Recovery Ready Community Index",
+      fluidRow(style = "margin-left: 6px; margin-right: 6px", width = 12,
         column(4, 
           br(), br(),
           img(src = "comm-caps.jpg",  width = "98%", style = "display: block; margin-left: auto; margin-right: auto;")
@@ -46,58 +54,64 @@ ui <- fluidPage(
             These assets, or categorys, refer to the resources that support positive individual change (i.e. economic mobility) and community resilience. 
             Utility of the framework is the emphasis on assets, rather than deficits or needs. ")
         )
-      )
+      ),
+      fluidRow(style = "margin: 20px", width = 12,
+               category_module_ui("rrci", "rrci"))
     ),
-    ## |__financial tab --------------------------------------------------------------------------------            
-    tabPanel("Financial", 
+    
+    
+    ## |__recovery_resources tab --------------------------------------------------------------------------------            
+    tabPanel("Recovery Resources", 
       fluidRow(style = "margin: 6px; padding-top:20px; padding-bottom:20px;",
         navlistPanel(widths = c(3, 9),
-          tabPanel(title = "Maps and Indicators", category_module_ui("Financial", "Financial")),
-          tabPanel(title = "Data Table", table_module_ui("Financial", "Financial")),
-          tabPanel(title = "Data, Measures, and Methods", sources_ui("Financial"))
+          tabPanel(title = "Maps and Indicators", category_module_ui("recovery_resources", "recovery_resources")),
+          tabPanel(title = "Data Table", table_module_ui("recovery_resources", "recovery_resources")),
+          tabPanel(title = "Data, Measures, and Methods", sources_ui("recovery_resources"))
         )
       )
     ),
-    ## |__human tab ------------------------------------------------------------------------------------            
-    tabPanel("Human",
+    ## |__primary_care_resources tab ------------------------------------------------------------------------------------            
+    tabPanel("Primary Care Resources",
       fluidRow(style = "margin: 6px; padding-top:20px; padding-bottom:20px;",
         navlistPanel(widths = c(3, 9),
-          tabPanel(title = "Maps and Indicators", category_module_ui("Human", "Human")),
-          tabPanel(title = "Data, Measures, and Methods", sources_ui("Human"))
+          tabPanel(title = "Maps and Indicators", category_module_ui("primary_care_resources", "primary_care_resources")),
+          tabPanel(title = "Data Table", table_module_ui("primary_care_resources", "primary_care_resources")),
+          tabPanel(title = "Data, Measures, and Methods", sources_ui("primary_care_resources"))
         )
       )
     ),
-    ## |__social tab -----------------------------------------------------------------------------------            
-    tabPanel("Social",
+    ## |__social_and_economic_resources tab -----------------------------------------------------------------------------------            
+    tabPanel("Social and Economic Resources",
       fluidRow(style = "margin: 6px; padding-top:20px; padding-bottom:20px;",
         navlistPanel(widths = c(3, 9),
-          tabPanel(title = "Maps and Indicators", category_module_ui("Social", "Social")),
-          tabPanel(title = "Data, Measures, and Methods", sources_ui("Social"))
+          tabPanel(title = "Maps and Indicators", category_module_ui("social_and_economic_resources", "social_and_economic_resources")),
+          tabPanel(title = "Data Table", table_module_ui("social_and_economic_resources", "social_and_economic_resources")),
+          tabPanel(title = "Data, Measures, and Methods", sources_ui("social_and_economic_resources"))
         )
       )
     ),
-    ## |__built tab ------------------------------------------------------------------------------------            
-    tabPanel("Built",
+    ## |__demographic_characteristics tab ------------------------------------------------------------------------------------            
+    tabPanel("Demographic Characteristics",
       fluidRow(style = "margin: 6px; padding-top:20px; padding-bottom:20px;",
         navlistPanel(widths = c(3, 9),
-          tabPanel(title = "Maps and Indicators", category_module_ui("Built", "Built")),
-          tabPanel(title = "Data, Measures, and Methods", sources_ui("Built"))
+          tabPanel(title = "Maps and Indicators", category_module_ui("demographic_characteristics", "demographic_characteristics")),
+          tabPanel(title = "Data Table", table_module_ui("demographic_characteristics", "demographic_characteristics")),
+          tabPanel(title = "Data, Measures, and Methods", sources_ui("demographic_characteristics"))
         )
       )
     ),
-    ## |__ natural tab ---------------------------------------------------------------------------------            
-    tabPanel("Natural",
+    ## |__ community_characteristics tab ---------------------------------------------------------------------------------            
+    tabPanel("Community Characteristics",
       fluidRow(style = "margin: 6px; padding-top:20px; padding-bottom:20px;",
         navlistPanel(widths = c(3, 9),
-          tabPanel(title = "Maps and Indicators", category_module_ui("Natural", "Natural")),
-          tabPanel(title = "Data, Measures, and Methods", sources_ui("Natural"))
+          tabPanel(title = "Maps and Indicators", category_module_ui("community_characteristics", "community_characteristics")),
+          tabPanel(title = "Data Table", table_module_ui("community_characteristics", "community_characteristics")),
+          tabPanel(title = "Data, Measures, and Methods", sources_ui("community_characteristics"))
         )
       )
     ),
-    ## |__political tab --------------------------------------------------------------------------------
-    tabPanel("Political"),
-    ## |__cultural tab ---------------------------------------------------------------------------------            
-    tabPanel("Cultural")
+    ## |__Key Terms tab --------------------------------------------------------------------------------
+    tabPanel("Key Terms")
   ## |_end navigation bar ------------------------------------------------------------------------------            
   ),    
   
@@ -116,12 +130,17 @@ ui <- fluidPage(
 
 ## SERVER ----------------------------------------------------------------------------------------------
 server <- function(input, output, session) {
-  res_fin <- category_module_server("Financial")
-  res_fin_table <- table_module_server("Financial")
-  res_soc <- category_module_server("Social") 
-  res_hum <- category_module_server("Human") 
-  res_nat <- category_module_server("Natural")
-  res_built <- category_module_server("Built")
+  res_rrci <- category_module_server("rrci")
+  res_reco <- category_module_server("recovery_resources")
+  res_reco_table <- table_module_server("recovery_resources")
+  res_soc_econ <- category_module_server("social_and_economic_resources")
+  res_soc_econ_table <- table_module_server("social_and_economic_resources")
+  res_prim_care <- category_module_server("primary_care_resources")
+  res_prim_care_table <- table_module_server("primary_care_resources")
+  res_comm <- category_module_server("community_characteristics")
+  res_comm_table <- table_module_server("community_characteristics")
+  res_demo <- category_module_server("demographic_characteristics")
+  res_demo_table <- table_module_server("demographic_characteristics")
 }
 
 

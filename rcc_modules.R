@@ -40,6 +40,7 @@ make_map <- function(selection) {
 
 ## MAKE TABLE FUNCTION --------------------------------------
 make_table <- function(category){
+  category = stringr::str_replace_all(tolower(category), " ", "_")
   selected_var <- unique(rcc_labels_data$count_name[rcc_labels_data$category == category])
   var_pretty_names <- unique(rcc_labels_data$drop_down_name[rcc_labels_data$category == category])
   
@@ -121,7 +122,8 @@ map_ui <- function(id) {
     p(),
     h5(textOutput(ns("var"))),
     #h6(textOutput(ns("lab"))),
-    leafletOutput(ns("map"), width = "100%")
+    leafletOutput(ns("map"), width = "1000px")
+    # Maybe use if statement to adjust for first page
   )
 }
 
@@ -159,11 +161,11 @@ table_ui <- function(id){
   
   # assemble UI elements
   tagList(
-    h4(strong("Table"), align = "left"),
+    h4(strong(id), align = "left"),
     p(),
     #h5(textOutput(ns("var"))),
     #h6(textOutput(ns("lab"))),
-    reactableOutput(ns("table"), width = "150%")
+    reactableOutput(ns("table"), width = "120%")
   )
 }
 
