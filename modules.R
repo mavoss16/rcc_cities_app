@@ -311,6 +311,7 @@ sources_ui = function(id) {
   
   title = stringr::str_replace_all(id, "_", " ") %>% tools::toTitleCase()
   
+  ## Recovery Resources
   if (id == "recovery_resources") {
     tagList(
       fluidRow(
@@ -325,6 +326,7 @@ sources_ui = function(id) {
           )
         )
       ),
+      ## First row of boxes (2 boxes)
       fluidRow(
         style = "margin: 6px",
         width = 12,
@@ -384,6 +386,7 @@ sources_ui = function(id) {
             )
           )
         ),
+        ## Second row of boxes (2 boxes)
         fluidRow(
           style = "margin: 6px",
           width = 12,
@@ -410,6 +413,7 @@ sources_ui = function(id) {
                    br(),
                    tags$a(href = "https://iowa.maps.arcgis.com/apps/webappviewer/index.html?id=5377c6", "Iowa Office of Drug Control Policy"),
                  )),
+          ## 3rd row of boxes (3 boxes)
           fluidRow(
             style = "margin: 6px",
             width = 12,
@@ -448,18 +452,99 @@ sources_ui = function(id) {
                      em('Source(s):'),
                      br(),
                      tags$a(href = "https://idph.iowa.gov/mat", "Iowa Department of Public")
-                   ))
+                   )
+            )
           )
         )
       )
     )
-  } else if (id == "Built") {
+    ## Primary Care Resources
+  } else if (id == "primary_care_resources") {
     tagList(
       fluidRow(
         style = "margin: 6px",
         width = 12,
         column(12, align = "left",
-               h3(strong(" Data Methods")))
+               h3(strong(title, " Data Methods")),
+               p(
+                 "Click on the sources to open links (where possible) from which the data was collected."
+               )
+        )
+      ),
+      fluidRow(
+        style = "margin: 6px",
+        width = 12,
+        column(
+          6,
+          wellPanel(
+            strong('Hospitals'),
+            p(),
+            em('Source(s):'),
+            br(),
+            tags$a(href = "https://en.wikipedia.org/wiki/List_of_hospitals_in_Iowa", "Wikipedia list of Iowa hospitals"),
+            br(),
+            p(),
+            em("Methods:"),
+            br(),
+            p("Counted the number of hospitals by city.")
+          )
+        ),
+        column(
+          6,
+          wellPanel(
+            strong('Mental Health Centers'),
+            p(),
+            em('Source(s):'),
+            br(),
+            tags$a(href = "https://dhs.iowa.gov/sites/default/files/MHDDAccreditedProviders_32.pdf", "Iowa Department of Human Services"),
+            br(),
+            p(),
+            em("Methods:"),
+            br(),
+            p("Counted the number of mental health centers by city.")
+          )
+        ),
+        ## Second row of boxes (2 boxes)
+        fluidRow(
+          style = "margin: 6px",
+          width = 12,
+          column(6,
+                 wellPanel(
+                   strong('Rural Clinics'),
+                   p(),
+                   em('Source(s):'),
+                   br(),
+                   tags$a(href = "https://iarhc.org/find-a-rural-health-clinic?view=map", "Iowa Association of Rural Health Clinics"),
+                   br(),
+                   p(),
+                   em("Methods:"),
+                   br(),
+                   p("Counted the number of rural clinics by city.")
+                 )),
+          column(6,
+                 wellPanel(width = "500px",
+                   strong('Veterans Affairs Health Centers'),
+                   p(),
+                   em('Source(s):'),
+                   br(),
+                   tags$a(href = "https://www.va.gov/directory/guide/state.asp?STATE=IA&dnum=ALL", "U.S. Department of Veterans Affairs"),
+                 )
+          )
+        )
+      )
+    )
+    ## Social and Economic Resources
+  } else if(id == "social_and_economic_resources"){
+    tagList(
+      fluidRow(
+        style = "margin: 6px",
+        width = 12,
+        column(12, align = "left",
+               h3(strong(title, " Data Methods")),
+               p(
+                 "Click on the sources to open links (where possible) from which the data was collected."
+               )
+        )
       ),
       fluidRow(
         style = "margin: 6px",
@@ -467,159 +552,92 @@ sources_ui = function(id) {
         column(
           4,
           wellPanel(
-            strong('Remote Work Accessibility'),
+            strong('Law Enforcement Offices'),
             p(),
             em('Source(s):'),
             br(),
-            tags$b(
-              'The remote work relative accessibility measure highlights counties where residents may have difficulty working remotely if instructed to do so.'
-            ),
-            (
-              'It conceptualizes four telecommunication infrastructure and employment characteristics as potential barriers, providing
-              a relative ranking of county telework preparedness.'
-            ),
-            p(),
-            em('How We Measure Remote Work Accessibility.'),
-            br(
-              'We calculate remote work relative accessibility using information on percent:'
-            ),
-            tags$li('Households with no broadband internet subscription.'),
-            tags$li('Persons in labor force with no computer available.'),
-            tags$li(
-              'Persons who are not currently working remotely and are employed in telework unfriendly occupations
-              (service, natural, construction, maintenance, production, transportation, material moving, and military specific occupations).'
-            ),
-            tags$li(
-              'Persons who are not currently working remotely and are employed in telework unfriendly industries
-              (construction, manufacturing, wholesale, retail, transportation and warehousing, utilities, and government, including armed forces).'
-            ),
-            br(
-              'We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
-              We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times.
-              The more times a county places in the 4th or 5th quintile on relevant indicators, the lower its relative remote work accessibility:'
-            ),
-            tags$li('Very high: 0 indicators.'),
-            tags$li('High: 1 indicator.'),
-            tags$li('Medium: 2 indicators.'),
-            tags$li('Low: 3 indicators.'),
-            tags$li('Very low: all 4 indicators.'),
-            p(),
-            em('Data source.'),
-            p(
-              a(
-                href = 'https://www.census.gov/programs-surveys/acs',
-                'American Community Survey',
-                target = "_blank"
-              ),
-              "2014/18 (5-year) estimates."
-            )
+            tags$a(href = "https://hifld-geoplatform.opendata.arcgis.com/datasets/local-law-enforcement-locations", "Homeland Infrastructure Foundation-Level Data")
           )
         ),
         column(
           4,
           wellPanel(
-            strong('Remote Education Accessibility'),
+            strong('Colleges'),
             p(),
             em('Source(s):'),
             br(),
-            tags$b(
-              'The remote education relative accessibility measure highlights counties where K-12 students may have difficulty participating in online education.'
-            ),
-            (
-              'It considers telecommunication infastructure and K-12 enrollment in providing a relative ranking of county K-12 remote education preparedness.'
-            ),
-            p(),
-            em('How We Measure Remote Education Accessibility.'),
-            br(
-              'We calculate remote education relative accessibility using information on percent:'
-            ),
-            tags$li('Households with no internet access subscription.'),
-            tags$li('Population under age 18 without a computer.'),
-            tags$li('Population enrolled in K-12.'),
-            br(
-              'We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
-              We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times.
-              The more times a county places in the 4th or 5th quintile on relevant indicators, the lower its relative remote education accessibility:'
-            ),
-            tags$li('High: 0 indicators.'),
-            tags$li('Medium: 1 indicator.'),
-            tags$li('Low: 2 indicators.'),
-            tags$li('Very low: all 3 indicators.'),
-            p(),
-            em('Data source.'),
-            p(
-              a(
-                href = 'https://www.census.gov/programs-surveys/acs',
-                'American Community Survey',
-                target = "_blank"
-              ),
-              "2014/18 (5-year) estimates."
-            )
+            tags$a(href = "https://en.wikipedia.org/wiki/List_of_colleges_and_universities_in_Iowa", "Wikipedia list of Iowa colleges and universities")
           )
         ),
         column(
           4,
           wellPanel(
-            strong('Telemental Health Accessibility'),
+            strong('Childcare Providers'),
             p(),
             em('Source(s):'),
             br(),
-            tags$b(
-              'The telemental health relative accessibility measure highlights counties where high need for mental health services is coupled with barriers to access.'
-            ),
-            (
-              'It considers telecommunication infastructure, health insurance, in-person provider availability, and mental health status
-              in providing a relative ranking of county K-12 telemental health accessibility.'
-            ),
+            tags$a(href = "http://ccmis.dhs.state.ia.us/ClientPortal/ProviderLocator.aspx", "Iowa Department of Human Services")
+          )
+        )
+      ),
+      fluidRow(
+        style = "margin: 6px",
+        width = 12,
+        column(
+          3,
+          wellPanel(
+            strong('Places of Worship'),
             p(),
-            em('How We Measure Telemental Health Accessibility.'),
-            br(
-              'We calculate telemental health relative accessibility using information on:'
-            ),
-            tags$li('Percent households without internet access.'),
-            tags$li('Percent households with no computer.'),
-            tags$li('Average number of poor mental health days in past month.'),
-            tags$li(
-              'Number of mental health providers per 100,000 population (reverse-coded).'
-            ),
-            tags$li('Percent population under age 65 without health insurance.'),
-            br(
-              'We compute quintile cut-offs for each indicator. County placement in a higher quintile indicates lower relative accessibility.
-              We assign descriptive labels for county relative accessibility based on whether they placed in 4th or 5th quintile a certain number of times.
-              The more times a county places in the 4th or 5th quintile on relevant indicators, the lower its relative telemental health accessibility:'
-            ),
-            tags$li('Very high: 0 indicators.'),
-            tags$li('High: 1 indicator.'),
-            tags$li('Medium: 2 or 3 indicators.'),
-            tags$li('Low: 4 indicators.'),
-            tags$li('Very low: all 5 indicators'),
+            em('Source(s):'),
+            br(),
+            tags$a(href = "https://data.iowa.gov/Physical-Geography/Iowa-Church-Buildings/juvk-dad9", "USGS Geographic Names Information System")
+          )
+        ),
+        column(
+          3,
+          wellPanel(
+            strong('Workforce Development Offices'),
             p(),
-            em('Data source.'),
-            p(
-              a(
-                href = 'https://www.census.gov/programs-surveys/acs',
-                'American Community Survey',
-                target = "_blank"
-              ),
-              "2014/18 (5-year) estimates and",
-              a(
-                href = 'https://www.countyhealthrankings.org/explore-health-rankings/measures-data-sources',
-                'County Health Rankings',
-                target = "_blank"
-              ),
-              "2019."
-            )
+            em('Source(s):'),
+            br(),
+            tags$a(href = "https://www.iowaworkforcedevelopment.gov/contact", "Iowa Workforce Development")
+          )
+        ),
+        column(
+          3,
+          wellPanel(
+            strong('Libraries'),
+            p(),
+            em('Source(s):'),
+            br(),
+            tags$a(href = "https://www.imls.gov/research-evaluation/data-collection/public-libraries-survey", 
+                   "Institute of Museum and Library Services, Public Libraries Survey")
+          )
+        ),
+        column(
+          3,
+          wellPanel(
+            strong('Parks'),
+            p(),
+            em('Source(s):'),
+            br(),
+            tags$a(href = "https://www.mycountyparks.com/County/Default.aspx", "MyCountyParks.com")
           )
         )
       )
     )
-  } else {
+    ## Demographic Characteristics
+  } else if(id == "demographic_characteristics"){
     tagList(
       fluidRow(
         style = "margin: 6px",
         width = 12,
         column(12, align = "left",
-               h3(strong(" Data Methods")))
+               h3(strong(title, " Data Methods")),
+               p(
+                 "Click on the sources to open links (where possible) from which the data was collected."
+               )
+        )
       ),
       fluidRow(
         style = "margin: 6px",
@@ -631,21 +649,6 @@ sources_ui = function(id) {
             p(),
             em('Source(s):'),
             br(),
-            br(),
-            p(),
-            em('How We Measure ...'),
-            br('We calculate ... using information on:'),
-            tags$li('Percent households ...'),
-            tags$li('Percent households ...'),
-            br('We compute quintile cut-offs for each indicator.... :'),
-            tags$li('Very high: 0 indicators.'),
-            tags$li('High: 1 indicator.'),
-            tags$li('Medium: 2 or 3 indicators.'),
-            tags$li('Low: 4 indicators.'),
-            tags$li('Very low: all 5 indicators'),
-            p(),
-            em('Data source.'),
-            p()
           )
         ),
         column(
@@ -655,21 +658,6 @@ sources_ui = function(id) {
             p(),
             em('Source(s):'),
             br(),
-            br(),
-            p(),
-            em('How We Measure ...'),
-            br('We calculate ... using information on:'),
-            tags$li('Percent households ...'),
-            tags$li('Percent households ...'),
-            br('We compute quintile cut-offs for each indicator.... :'),
-            tags$li('Very high: 0 indicators.'),
-            tags$li('High: 1 indicator.'),
-            tags$li('Medium: 2 or 3 indicators.'),
-            tags$li('Low: 4 indicators.'),
-            tags$li('Very low: all 5 indicators'),
-            p(),
-            em('Data source.'),
-            p()
           )
         ),
         column(
@@ -679,21 +667,51 @@ sources_ui = function(id) {
             p(),
             em('Source(s):'),
             br(),
+          )
+        )
+      )
+    )
+    ## Community Characteristics
+  } else if(id == "community_characteristics"){
+    tagList(
+      fluidRow(
+        style = "margin: 6px",
+        width = 12,
+        column(12, align = "left",
+               h3(strong(title, " Data Methods")),
+               p(
+                 "Click on the sources to open links (where possible) from which the data was collected."
+               )
+        )
+      ),
+      fluidRow(
+        style = "margin: 6px",
+        width = 12,
+        column(
+          4,
+          wellPanel(
+            strong('Domain 1'),
+            p(),
+            em('Source(s):'),
             br(),
+          )
+        ),
+        column(
+          4,
+          wellPanel(
+            strong('Domain 2'),
             p(),
-            em('How We Measure ...'),
-            br('We calculate ... using information on:'),
-            tags$li('Percent households ...'),
-            tags$li('Percent households ...'),
-            br('We compute quintile cut-offs for each indicator.... :'),
-            tags$li('Very high: 0 indicators.'),
-            tags$li('High: 1 indicator.'),
-            tags$li('Medium: 2 or 3 indicators.'),
-            tags$li('Low: 4 indicators.'),
-            tags$li('Very low: all 5 indicators'),
+            em('Source(s):'),
+            br(),
+          )
+        ),
+        column(
+          4,
+          wellPanel(
+            strong('Domain 3'),
             p(),
-            em('Data source.'),
-            p()
+            em('Source(s):'),
+            br(),
           )
         )
       )

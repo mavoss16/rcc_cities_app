@@ -1,13 +1,12 @@
 ## DEPENDENCIES ----------------------------------------------------------------------------------------
 library(shiny)
 library(bslib)
-library(readr)
 library(dplyr)
 library(sf)
 library(leaflet)
 library(reactable)
-source("rcc_data.R")
-source("rcc_modules.R")
+source("data.R")
+source("modules.R")
 
 ## SET THEME -------------------------------------------------------------------------------------------
 bs_theme_new(bootswatch = "cosmo")
@@ -69,10 +68,61 @@ ui = fluidPage(
           12,
           br(),
           h2(strong("Recovery Ready Communities")),
-          br(),
+          p(
+            "Recovery Community Centers (RCCs) are a low-cost, member driven, voluntarist, locally managed, and community-based 
+            intervention aimed at supporting sustainable recovery for people with substance use disorder, or SUD. 
+            RCCs link people to existing community recovery resources and services and promote a vibrant recovery culture by offering 
+            a physical community center where people in recovery can visit, engage with others in recovery, and learn about 
+            support services and health resources. This approach is validated by academic studies and is promoted by the SUD community 
+            and public health officials. However, finding the right communities for RCC development in Iowa has proven difficult: 
+            Iowa is one of just five states in the U.S. that has yet to adopt the recovery community model."
+          ),
+          p(
+            "Which Iowa communities are best positioned to support a Recovery Community Center? 
+            To answer this question, we reviewed scientific literature on substance use recovery and engaged key 
+            stakeholders who work directly with the SUD population in Iowa to understand what kinds of communities 
+            are most conducive to SUD recovery. Based on what we learned, we identified 17 unique community-based resources 
+            associated with successful RCC development and collected nearly 16,000 resource data points across almost all of 
+            Iowa’s 944 cities and towns. These efforts culminated in the development of a novel Recovery Ready Community Index (RRCI), 
+            a way to measure the breadth and depth of local recovery infrastructure and the size and strength of the 
+            local substance use recovery culture. (For a visual overview of the results by the four recovery domains, see Figures 4 and 5). 
+            We then analyzed index results to identify the thirty highest value, ‘Recovery Ready’ communities in Iowa based on this index. 
+            These results are visualized in Figure 1. The size of the circle for each community reflects the community’s overall population."
+          ),
+          p(),
+          h4("Breadth of Recovery Resources"),
+          p(
+            "Breadth of recovery resources was measured by counting the number of different types of recovery resources in 
+            each county and community. With 17 categories of recovery resources, this index ranged from 0-17. A town with a 
+            score of zero indicates that we were unable to locate any of the resources and infrastructure listed in Table 3 
+            (e.g. no hospitals nor parks nor treatment centers). Cities with a score of 17 have one or more of each of the 
+            recovery resource categories for which we had data. Six cities, including Sioux City, Mason City, Fort Dodge, 
+            Dubuque, Iowa City, and Des Moines, had at least one instance of each of the 17 recovery resources we measured."
+          ),
+          p(
+            "The importance of measuring resource breadth was documented in the scientific literature and was a consistent 
+            theme in conversations with experts, who noted that providing multiple pathways to recovery is critical to successful, 
+            sustainable recovery. The reason for this is because the recovery process is a personal journey, inextricably interwoven 
+            with a person’s own, distinctive biography. Places with a wealth of recovery support resources are better able to meet 
+            the diverse and unique needs of their recovery population. Put differently, RCCs in resource rich communities can better 
+            serve their members by providing access to a wider variety of resources. This ensures that each RCC member has the 
+            particular resources they need, when they need them, as they progress through their personal recovery journey (See Figure 4, panel a)."
+          ),
+          h4("Depth of Recovery Resources"),
+          p(
+            ""
+          ),
+          h4("Size of Recovery Culture"),
+          p(
+            ""
+          ),
+          h4("Strength (Vibrancy) of Recovery Culture"),
+          p(
+            ""
+          ),
           h4("Recovery Ready Community Index"),
           p(
-            "Recovery Community Centers (RCCs) are a low-cost, member driven, voluntarist, locally managed, and community-based intervention aimed at supporting sustainable recovery for people with substance use disorder, or SUD. RCCs link people to existing community recovery resources and services and promote a vibrant recovery culture by offering a physical community center where people in recovery can visit, engage with others in recovery, and learn about support services and health resources. This approach is validated by academic studies and is promoted by the SUD community and public health officials. However, finding the right communities for RCC development in Iowa has proven difficult: Iowa is one of just five states in the U.S. that has yet to adopt the recovery community model."
+            ""
           )
         )
       ),
@@ -90,11 +140,9 @@ ui = fluidPage(
           br(),
           h2(strong("The Community Capitals Framework")),
           br(),
-          h4(
-            "The Community Capitals Framework is based on the idea that communities have assets.
+          h4("The Community Capitals Framework is based on the idea that communities have assets.
             These assets, or categories, refer to the resources that support positive individual change (i.e. economic mobility) and community resilience.
-            Utility of the framework is the emphasis on assets, rather than deficits or needs. "
-          )
+            Utility of the framework is the emphasis on assets, rather than deficits or needs. ")
         )
       ),
       fluidRow(
