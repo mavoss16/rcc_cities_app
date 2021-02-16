@@ -17,10 +17,18 @@ social_and_economic_resources,church,Places of Worship,church_count,church_rank
 social_and_economic_resources,workforce_development_centers,Workforce Development Centers,workforce_development_centers_count,workforce_development_centers_rank
 social_and_economic_resources,library,Libraries,library_count,library_rank
 social_and_economic_resources,park,Parks,park_count,park_rank
-demographic_characteristics,,Median Age,,
-demographic_characteristics,,Percent White Population,,
-community_characteristics,,Educational attainment,,
-community_characteristics,,Income,,
+demographic_characteristics,pct_white,Percent White Population,pct_white,
+demographic_characteristics,pct_nonwhite,Percent Nonwhite Population,pct_nonwhite,
+demographic_characteristics,pct_under18,Percent Under 18,pct_under18,
+demographic_characteristics,pct_over65,Percent Over 65,pct_over65,
+demographic_characteristics,median_ageE,Median Age,median_ageE,
+community_characteristics,pct_hs,Percent With a High School Degree,pct_hs,
+community_characteristics,pct_bach,Percent With a Bachelor's Degree,pct_bach,
+community_characteristics,pct_poverty,Percent Below the Poverty Line,pct_poverty,
+community_characteristics,median_household_incomeE,Median Household Income,median_household_incomeE,
+community_characteristics,pct_snap,Percent SNAP recipients,pct_snap,
+community_characteristics,pct_internet,Percent With Internet Access,pct_internet,
+community_characteristics,avg_commute,Average Commute Time,avg_commute,
 rrci,rrci_score,Recovery Ready Community Score,rrci_score,
 rrci,breadth_score,Breadth Score,breadth_score,
 rrci,depth_rank,Depth Ranking,depth_rank,
