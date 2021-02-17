@@ -75,12 +75,9 @@ make_table = function(category) {
   selected_var = unique(rcc_labels_data$count_name[rcc_labels_data$category == category])
   var_pretty_names = unique(rcc_labels_data$drop_down_name[rcc_labels_data$category == category])
   
-  table_data = rcc_city_data %>% select(all_of(c(
-    "city", "county", "rrci_rank", selected_var
-  )))
-  names(table_data) = c("City", "County", "RRCI Rank", var_pretty_names)
+  table_data = rcc_city_data %>% select(all_of(c("city", "county", "rrci_rank", selected_var)))
   
-  #green_pal = function(x) rgb(colorRampPalette(c("#ffffff", "#71CA97"))(x))
+  names(table_data) = c("City", "County", "RRCI Rank", var_pretty_names)
   
   reactable(
     table_data,
@@ -115,16 +112,13 @@ variable_select_ui = function(id, category) {
   
   # define choices for variable selection
   variable_options = as.list(unique(rcc_labels_data$drop_down_name[rcc_labels_data$category == category]))
-  #subdomain_options = as.list(unique(rcc_labels_data$sub_domain[rcc_labels_data$category == category]))
-  
+
   # assemble UI elements
   tagList(
     h4(strong("Selector"), align = "left"),
     p(),
     selectInput(ns("which_variable"), "Variable", choices = variable_options),
-    p(),
-    #selectInput(ns("which_subdomain"), "Sub Domain", choices = subdomain_options),
-    #p()
+    p()
   )
 }
 
@@ -132,32 +126,31 @@ variable_select_server = function(id) {
   moduleServer(id,
                function(input, output, session) {
                  ns = session$ns
-                 ## update input$subdomain
-                 # Is this because the subdomain options changed based on the domain? I think yes
-                 # observe({
-                 #   variable_options = unique(rcc_labels_data$sub_domain[rcc_labels_data$domain == stringr::str_replace_all(input$which_domain, " ", "_")])
-                 #   updateSelectInput(session, "which_subdomain", choices = variable_options)
-                 # })
                  
                  return(
                    list(variable = reactive({
                      input$which_variable
-                   })))#,
-                   # subdomain = reactive({ input$which_subdomain })))
+                   })))
                })
 }
 
 ## DEFINE UI & SERVER FOR MAPS -------------------------------------------------------------------------
 map_ui = function(id) {
   ns = NS(id)
-  
+  if(id == "rrci-map"){
+    width_amount = "1150px"
+  }
+  else{
+    width_amount = "100%"
+  }
   # assemble UI elements
   tagList(
     h4(textOutput(ns("var"))),
     #h6(textOutput(ns("lab"))),
     
-    leafletOutput(ns("map"), width = "1150px", height = "500px")
-    # Maybe use if statement to adjust for first page)
+    #leafletOutput(ns("map"), width = "1150px", height = "500px")
+    leafletOutput(ns("map"), width = width_amount, height = "500px")
+    # Maybe use if statement to adjust for first page
   )
 }
 
@@ -235,7 +228,7 @@ table_server = function(id, category) {
 }
 
 
-## TABLE MODULE UI & SERVER -------------------------------------
+## TABLE PAGE MODULE UI & SERVER -------------------------------------
 table_module_ui = function(id, category) {
   ns = NS(id)
   tagList(fluidRow(
@@ -302,9 +295,7 @@ category_module_server = function(id) {
 
 
 
-## MAKE MODULES FOR SOURCES TAB ------------------------------------------------------------------------
-## (INCOMPLETE)
-## Honestly, this is a mess and I did not have the time to think of a better solution.
+## MAKE MODULES FOR SOURCES TABS ------------------------------------------------------------------------
 ## Ideally, this should probably become a function.
 sources_ui = function(id) {
   ns = NS(id)
@@ -717,4 +708,446 @@ sources_ui = function(id) {
       )
     )
   }
+}
+
+
+## MAKE MODULE FOR WHAT IS RECOVERY? --------------------------------------------------------------------
+what_is_recovery_ui = function(id) {
+  ns = NS(id)
+  
+  tagList(
+    fluidRow(
+      style = "margin: 6px",
+      width = 12,
+      column(
+        width = 10,
+        offset = 1,
+        h2(strong("What is Recovery?")),
+        p(
+          "Though substance use recovery is an evolving concept that has been defined in a number of ways over the years, 
+          an emerging consensus is that recovery is a voluntary path toward improved personal wellbeing coupled with a diminished 
+          risk of substance use relapse (see Appendix Table C1 for list of recovery definitions). As noted by Bill White (2007):"
+        ),
+        tags$blockquote(style = "margin-left: 40px; margin-right: 40px",
+          "Recovery is the experience through which individuals, families, and communities impacted by severe alcohol and 
+          other drug (AOD) problems utilize internal and external resources to voluntarily resolve these problems, 
+          heal the wounds inflicted by AOD related problems, actively manage their continued vulnerability to such problems, 
+          and develop a healthy, productive, and meaningful life.",
+          cite = "Bill White (2007)"
+        ),
+        p(
+          "In White's view, resources help individuals, families, and communities in two ways. First, they help solve alcohol and 
+          other drug-related problems (for example, addiction, unemployment, housing instability, family separation) and second, 
+          they support health, productivity, and meaning in post treatment life. The appeal of this view is that it is explicit and 
+          direct in its recognition that recovery involves not only internal resources such as mental, emotional, and genetic factors, 
+          but also external ones. In thinking about where to focus federal and state resources to develop a network of community-based 
+          recovery centers in Iowa, a key question is, \"What kinds of external resources matter most for sustained SUD recovery?\""
+        ),
+        p(
+          "If we knew which resources were most helpful to long-run recovery, we could target towns and cities with large stocks of 
+          'recovery resources' to grow Recovery Community Centers. To answer this question, we reviewed the scientific literature 
+          on substance use recovery, giving special attention to theories of SUD recovery and frameworks that involved external resources. 
+          We also reviewed focus group data collected by Iowa’s HIPWUD Board to understand how Iowans who use drugs 
+          define recovery (HIPWUD, 2020). More broadly, we looked for models of recovery that included the community in which recovery 
+          happens and the wider ecological factors, such as access to nature and connection to faith communities, 
+          that constitute external recovery resources."
+        ),
+        p(
+          "The road to long-term recovery is challenging and oftentimes characterized by sequences of relapse, treatment, incarceration, 
+          and short-term abstinence, each which can be more extreme and harmful for people with few resources 
+          (Laudet and White, 2008; Kelly et al., 2020). The scientific literature indicates that the majority of treatment services 
+          rely on an acute care model of interventions, which results in a \"revolving door effect\" characterized by multiple acute care episodes 
+          (Grove-Paul et al., 20, p.6). Conversely, the disease management paradigm is viewed as more a holistic approach to recovery that 
+          not only addresses problem substance use behaviors, but also the myriad of other needs of an individual in recovery. 
+          Common needs of people with SUD include vocational training, employment services, housing assistance, pro-social support and 
+          connections to the local community, building (or rebuilding) family and friendship networks, and perhaps most importantly, 
+          a sense of purpose and meaning in life that agrees with the values, beliefs and motivations of pro-recovery behaviors 
+          of people who use drugs. In our review of the recovery literature, we identified the Recovery Oriented Systems of Care (ROSC) 
+          theoretical approach as an especially promising framework to guide recovery efforts in Iowa, owing to its holistic visioning of 
+          SUD recovery options and its flexibility in supporting a variety of demographic, cultural, and socioeconomic subgroups who 
+          constitute the recovery communities of Iowa."
+        ),
+        p(
+          "ROSC shifts the recovery process in the direction of a collaboration between public health workers, clinical care providers, 
+          the local community, and the recovery population by linking them within a system of care and support. 
+          The innovation of the ROSC model is its recognition that service delivery should incorporate clinical treatment into a 
+          long-term recovery capital framework to address the proximate problem of substance use addiction and the myriad of other 
+          needs of an individual in recovery. Recovery capital refer to substance use recovery that is self-motivated, durable, 
+          and calibrated to the resources in the community and available to a person in recovery. 
+          Growing an individual's recovery capital is viewed as critical for sustained recovery. 
+          ROSC encourages an individualized and self-directed approach to recovery that builds on the strengths and 
+          resilience of individuals, families, and communities to chart a course toward sustainable recovery from substance use related problems. 
+          ROSC empowers individuals by providing them with the information, tools, resources, life-skills, and supports they need 
+          for long-term recovery (McKay, 2016)."
+        ),
+        p(
+          "The ROSC framework leverages the notion of 'recovery ready', with the assumption that communities should utilize 
+          evidence-based prevention strategies to engage in early intervention and education of individuals and communities 
+          about the dangers of substance use. This framework encourages communities to provide opportunities for individuals in, 
+          or seeking, recovery to find housing, education, and employment, as well as access to the kinds of supportive environments 
+          that facilitate long-term recovery and a higher state of individual wellbeing (Ashford et al., 2019). Two related theories, 
+          the Recovery Ready Ecological Model (Ashford et al. 2019; Haberle et al. 2014; Matto 2004; Best et al. 2016), and 
+          the Recovery Capital framework (Cloud and Granfield 2008; Cano et al. 2017; Laudet and White 2008; Groshkova et al. 2012; 
+          Sanchez et al. 2019), point to the same general approach to sustainable, community-based recovery. Namely, leverage both the 
+          formal and informal systems of care that exist within a community to systematically reintegrate people in recovery into social 
+          and civic life (e.g. employment, family, church, volunteerism, active living). It is informal resources that represent the 
+          bridge from short-term, resource intensive clinical care to sustainable, long-run recovery."
+        ),
+        p(
+          "ROSC also suggests that a comprehensive continuum of care model, rather than just an acute model of care, 
+          should be deployed if we want to increase the opportunity for successful recovery and decrease the economic and 
+          health burden to families and the state. Because most individuals will engage in the process of recovery within 
+          the communities where they live, the long-term support for individuals in recovery might be most beneficial when 
+          presented within the local community. In this way, the ROSC model satisfies the requirement for providing the 
+          long-term support to those in recovery by leveraging the community resources and systems of care that already 
+          exist within the community (Ashford et al., 2019)."
+        ),
+        p(
+          "Drawing on an analogy that aligns with Iowa's history of agriculture, communities are the soil in which substance 
+          use and related health and social problems grow or fail to grow, and in which the mitigation of substance use problems 
+          thrive or fail. Understanding which communities have the right soil composition to facilitate organic (readily available 
+          and not contingent on resources external to the community) and sustainable growth is critical to statewide SUD recovery efforts."
+        )
+      )
+    )
+  )
+}
+  
+## MAKE MODULE FOR IDENTIFYING RECOVERY RESOURCES --------------------------------------------------------------------
+identifying_recovery_resources_ui = function(id) {
+  ns = NS(id)
+  
+  tagList(
+    fluidRow(
+      style = "margin: 6px",
+      width = 10,
+      offset = 1,
+      column(
+        width = 12,
+        h2(strong("Identifying Recovery Resources in Iowa")),
+        p(
+          "Based on our review of the literature, we identified a number of clinical and non-clinical community-based resources that 
+          have been shown to positively impact SUD recovery. There is wide agreement, for example, that being close to a hospital or 
+          health clinic is good for SUD recovery. In particular, medication assisted treatment (e.g. suboxone, methadone) is perhaps 
+          the most critical clinical support necessary to prevent relapse among those with opioid use disorder (OUD). Ready access to 
+          treatment services, including both inpatient and outpatient services, regular participation in a peer support group such as 
+          Alcoholics Anonymous, Narcotics Anonymous, or Self-Management and Recovery Training also enhances recovery prospects. 
+          An emerging consensus among recovery science scholars is that recovery coaches and peer mentors, especially those with lived 
+          SUD experience, offer people in recovery invaluable emotional, social, and cultural support that lengthens recovery duration 
+          and empowers individuals to build the resilience needed to sustain their recovery. More broadly, the literature suggests that 
+          generalized, formal care provided by doctors, clinicians, and other certified health professionals is invaluable to SUD recovery. 
+          Equally important are the formal and informal systems of care that are specific to people with particular substance use histories, 
+          and the many other behavioral health risks arising from harmful chemical use."
+        ),
+        p(
+          "Our review of the literature, especially the emerging consensus around the Recovery Capital framework and Recovery Ready 
+          Ecological Model, suggest that non-clinical community resources are also important. For example, workforce development and 
+          continuous training for service providers plays a critical role in helping those with a substance use disorder get back on 
+          their feet and move toward financial independence. Churches offer a ready-made community that, under the right conditions, 
+          provide people who use drugs a welcoming and supportive environment for recovery. Importantly, churches and other voluntarist, 
+          service-oriented non-profits offer those in recovery a sense of purpose and meaningful life that is absent from much of the 
+          clinical care toolkit, and yet essential to sustainable recovery. Communities that offer their residents easy and plentiful 
+          access to nature (e.g. parks, walkable communities) and affordable access to cultural content such as books, movies, lectures 
+          (e.g. libraries), and community activities such as farmers markets, festivals, and parades provide people in recovery with 
+          multiple pathways to rejoin the community as active and welcomed members. Notably, each of these resources is either very low 
+          cost or free, making them especially appealing resources because of their ability to be accessed by all members of the community. 
+          Communities that offer many of these kinds of resources to their residents are well equipped to build the positive, recovery-oriented 
+          culture critical to Recover Community Center success."
+        ),
+        p(
+          "We organized two data discovery workshops with substance use experts in Iowa, including a workshop with recovery programming 
+          leaders at the Bureau of Substance Abuse, and another with members of the Linkage to Care Advisory Board, a diverse group of 
+          Iowans' with expertise and interest in minimizing the harms of SUD on Iowa's families and communities. These workshops allowed 
+          our team to discuss SUD recovery, present the ROSC model, and solicit feedback concerning the kinds of community infrastructure 
+          that should be considered when thinking about where to locate Recovery Community Centers in Iowa."
+        ),
+        p(
+          "We also interviewed directors of Recovery Community Centers throughout the country to learn how best to establish RCCs in Iowa 
+          (Dorius, Dorius, Talbert, Van Selous, Jahic, Bahe, & Young, 2020). Throughout these interviews, we watched for stories and 
+          suggestions that would preference some types of resources over others and for particular places that might be particularly 
+          well suited for RCC development."
+        ),
+        p(
+          "Drawing on feedback received from workshop participants, national leaders, the academic literature, and our own expertise 
+          and insights, our research team developed a list of 17 community resources that are widely understood to support and enhance 
+          SUD recovery (see Table 2). We then located, acquired, and cleaned this extensive list of community-based recovery resources 
+          in Iowa. See Appendix for data collection details. Our team's efforts produced the names, addresses, and geolocation information 
+          for nearly 16,000 recovery resources throughout the state. We mapped these resources in several different ways. In the first step, 
+          we summed all of the recovery resources in each city and county in Iowa (e.g. all hospitals, plus all treatment centers, plus all 
+          colleges in each place), which we visualized in the data visualization program Tableau (version 2020.2.1). Figure 3 identifies 
+          counties and cities with especially large numbers of total recovery resources. Each county is shaded by their overall number of 
+          resources (the darker the shade the more resources), and circles represent the population size of communities within counties 
+          (the bigger the circle the more people). According to our data, Polk County has at least 1,784 existing recovery resources, with 
+          Des Moines laying claim to 1,034 of these resources. Woodbury County has at least 564 recovery resources, of which 405, or roughly 
+          4 out of every 5 resources, is located in Sioux City. Audubon County has at least 59 total resources and Adams County has at least 
+          39 total resources. This first step of analysis helped identify potential locations for Recovery Community Center engagement efforts, 
+          but lacked a more nuanced approach to evaluating communities based on the type and quality of their total resources."
+        )
+      )
+    )
+  )
+}
+
+## MAKE MODULE FOR KEY TERMS TAB --------------------------------------------------------------------
+key_terms_ui = function(id) {
+  ns = NS(id)
+  
+  tagList(
+    fluidRow(
+      style = "margin: 6px",
+      width = 12,
+      column(
+        width = 10,
+        offset = 1,
+        h2(strong("Key Terms")),
+        p(
+          strong("Acute care model"),
+          " approaches substance use as a pathological, acute illness. It is characterized by crisis interventions, clinical assessments, 
+          admission to treatments geared toward stabilization, with a focus on symptom suppression, short-term service-oriented relationships. 
+          Acute care typically ends at discharge from treatment (termination of the service relationship) with the expectation of permanent 
+          resolution of alcohol or other substance problems."
+        ),
+        p(
+          strong("Comprehensive continuum of care model"),
+          " model is a holistic approach to recovery that views long-term recovery as an often-circular process characterized by 
+          sequences of relapse, treatment, incarceration, and short-term remission. This cyclic life trajectory is especially 
+          prevalent among vulnerable populations (e.g. fewer resources)."
+        ),
+        p(
+          strong("Opioid use disorder"),
+          " pathological cycles of destructive opioid use characterized by loss of control of opioid use, risky opioid use, 
+          impaired social functioning, tolerance, and withdrawal symptoms from opioids."
+        ),
+        p(
+          strong("Recovery Capital framework"),
+          " rests on the assumption that the recovery from substance use is more than the absence of substance use in an 
+          otherwise unchanged life. This framework proposes that sustained recovery and prevention of relapse can be 
+          fortified by mobilizing social, personal, environmental and cultural resources. The goal is physical, mental 
+          and social wellbeing, enhanced quality of life, and meaningful life goals. Social position and the socio-economic 
+          context of substance use effect the acquisition and accumulation of recovery resources (capital)."
+        ),
+        p(
+          strong("Recovery Community Centers"),
+          " are community-oriented, local organizations developed around the concept of social capital incubators. 
+          The center links members of the recovery community to different support services and recovery resources near them. 
+          Peer mentors facilitate the accrual of recovery capital by linking members to, for example, recovery coaching, 
+          medication assisted treatment, employment or education linkages. Located in the heart of the community, Recovery 
+          Community Centers often support mobilization efforts, peer support meetings, service and community outreach activities, 
+          and destigmatize campaigns."
+        ),
+        p(
+          strong("Recovery Oriented Systems of Care"),
+          " is a strength-based framework that builds on strengths and resilience of individuals, families, and communities to 
+          promote sustainable wellbeing, good health, and recovery from substance use problems. Recovery Oriented Systems of Care 
+          (ROSC) support continuity of service and care by linking formal systems of care to existing community resources and 
+          informal systems of care. ROSC emphasize sustained recovery management, a coordinated multi-system approach, with 
+          flexibility to meet diverse and unique needs of individuals in, or seeking, recovery. ROSC assumes recovery is a 
+          process along a continuum that requires the ongoing monitoring of individuals in or seeking recovery, involvement of 
+          peers and allies for support, individualized and comprehensive services, continuity of care that is aligned with personal 
+          belief systems, and commitment to peer-delivered recovery support services."
+        ),
+        p(
+          strong("Recovery Ready Community Index"),
+          " is a tool that assesses community recovery readiness by measuring the breadth and depth of existing community recovery 
+          resources. Resources include formal and informal resources and clinical and non-clinical systems of care service providers, 
+          such as hospitals, treatment centers, mutual aid and support groups, recovery coaches, churches, and parks. Assessment of 
+          assets and the channeling of existing assets to support individuals in, or seeking, recovery can substantially enhance 
+          communities’ efforts to effectively respond to substance use."
+        ),
+        p(
+          strong("Recovery Ready Ecological Model"),
+          " helps assess and identify elements found to be supportive of recovery as well as elements that might act as barriers 
+          to successful recovery. This model proposes that communities and professional sectors collaborate to provide a holistic 
+          infrastructure promotes sustained recovery."
+        ),
+        p(
+          strong("Substance Use Disorder"),
+          " is here defined as any use of alcohol or drugs that is compulsive and/or dangerous. It is characterized by impaired 
+          social or physical control, risky use, sustained and heavy substance use despite experiencing the harmful consequences 
+          of heavy use, and pharmacological criteria. Other symptoms include escalating use due to chemical tolerance and cravings 
+          to use drugs despite negative consequences."
+        ),
+        p(
+          strong("Sustained Recovery"),
+          " is dynamic, intentional process of self-directed change through which individuals utilize internal and external resources 
+          to voluntarily resolve these problems, heal the wounds inflicted by alcohol or other substance-related problems, actively 
+          manage their vulnerability to such problems, strive to develop and maintain a healthy, productive, and meaningful life."
+        )
+      )
+    )
+  )
+}
+
+
+## MAKE RRCI MODULE -------------------------------------------------------------
+rrci_ui = function(id){
+  ns = NS(id)
+  
+  tagList(
+    fluidRow(
+      style = "margin-left: 6px; margin-right: 6px",
+      width = 12,
+      column(
+        width = 10,
+        offset = 1,
+        br(),
+        h2(strong("Recovery Ready Communities")),
+        p(
+          "Recovery Community Centers (RCCs) are a low-cost, member driven, voluntarist, locally managed, and community-based 
+            intervention aimed at supporting sustainable recovery for people with substance use disorder, or SUD. 
+            RCCs link people to existing community recovery resources and services and promote a vibrant recovery culture by offering 
+            a physical community center where people in recovery can visit, engage with others in recovery, and learn about 
+            support services and health resources. This approach is validated by academic studies and is promoted by the SUD community 
+            and public health officials. However, finding the right communities for RCC development in Iowa has proven difficult: 
+            Iowa is one of just five states in the U.S. that has yet to adopt the recovery community model."
+        ),
+        p(
+          "Which Iowa communities are best positioned to support a Recovery Community Center? 
+            To answer this question, we reviewed scientific literature on substance use recovery and engaged key 
+            stakeholders who work directly with the SUD population in Iowa to understand what kinds of communities 
+            are most conducive to SUD recovery. Based on what we learned, we identified 17 unique community-based resources 
+            associated with successful RCC development and collected nearly 16,000 resource data points across almost all of 
+            Iowa's 944 cities and towns. These efforts culminated in the development of a novel Recovery Ready Community Index (RRCI), 
+            a way to measure the breadth and depth of local recovery infrastructure and the size and strength of the 
+            local substance use recovery culture. (For a visual overview of the results by the four recovery domains, see Figures 4 and 5). 
+            We then analyzed index results to identify the thirty highest value, 'Recovery Ready' communities in Iowa based on this index. 
+            These results are visualized in Figure 1. The size of the circle for each community reflects the community's overall population."
+        ),
+        p(
+          "Iowa's Recovery Ready Communities are located in every region of the state and include a diversity of cities from major 
+          metropolitan areas, micropolitan areas, and communities of less than 10,000 residents. Each town had at least nine of the 17 
+          types of recovery infrastructure assessed, which can be leveraged to enhance the chances of sustainable recovery. We recommend 
+          that future work to develop Recovery Community Centers in Iowa target the communities identified in Figure 1 for detailed community 
+          profiling, outreach, and engagement. We believe each of these communities can benefit from, and also be a benefit to, a 
+          Recovery Community Center and its members. You can learn more about the RRCI in the detailed report titled \"The Recovery 
+          Ready Community Index: A Public Health Assessment Tool\"."
+        ),
+        p(
+          "We then classified the recovery resources into four sub-indexes (breadth, depth, size, and strength) that make up 
+          the basis for our multi-dimensional Recovery Ready Community Index (RRCI)."
+        ),
+        p(),
+        h4("Breadth of Recovery Resources"),
+        p(
+          "Breadth of recovery resources was measured by counting the number of different types of recovery resources in 
+            each county and community. With 17 categories of recovery resources, this index ranged from 0-17. A town with a 
+            score of zero indicates that we were unable to locate any of the resources and infrastructure listed in Table 3 
+            (e.g. no hospitals nor parks nor treatment centers). Cities with a score of 17 have one or more of each of the 
+            recovery resource categories for which we had data. Six cities, including Sioux City, Mason City, Fort Dodge, 
+            Dubuque, Iowa City, and Des Moines, had at least one instance of each of the 17 recovery resources we measured."
+        ),
+        p(
+          "The importance of measuring resource breadth was documented in the scientific literature and was a consistent 
+            theme in conversations with experts, who noted that providing multiple pathways to recovery is critical to successful, 
+            sustainable recovery. The reason for this is because the recovery process is a personal journey, inextricably interwoven 
+            with a person's own, distinctive biography. Places with a wealth of recovery support resources are better able to meet 
+            the diverse and unique needs of their recovery population. Put differently, RCCs in resource rich communities can better 
+            serve their members by providing access to a wider variety of resources. This ensures that each RCC member has the 
+            particular resources they need, when they need them, as they progress through their personal recovery journey (See Figure 4, panel a)."
+        ),
+        h4("Depth of Recovery Resources"),
+        p(
+          "Depth of recovery resources was measured by first counting the total number of resources in each category and then ranking 
+          cities accordingly. This produced 17 rankings-one for each resource-ranging from 1 (the top ranked city for that particular 
+          resource) to n (the lowest ranked city for that particular resource, which conceptually can be as high as the number of cities 
+          in Iowa, but in practice is usually lower because of ties and missing data).  We then averaged the 17 individual rankings to 
+          create an overall ranking for each city or county. Cities and counties with a large number of resources in each category 
+          received a low average ranking (e.g., if you were a top-ten ranked city on each of the indicators, your average score would 
+          be 10 or less). Cities with fewer resources, especially those who faced resource scarcity over multiple categories, received 
+          a higher average ranking (e.g., if a community was ranked 50th or higher on every category, their average score would be at 
+          least 50).  Des Moines had the most favorable ranking on this index with a score of 6, meaning that Des Moines’ average ranking 
+          across all 17 resources was six, followed by Ames (16) and Dubuque (29)."
+        ),
+        h4("Size of Recovery Culture"),
+        p(
+          "The goal of the measure was to identify communities with diverse stocks of each resource to help facilitate long-run, 
+          sustainable recovery. When individuals need medical support, for example, communities with a larger number of clinics and 
+          hospitals may be able to provide more rapid, customizable, and culturally-appropriate care. When communities have a variety 
+          of options for each resource category, people can engage resources that make sense for their personal recovery journey, 
+          such as those that match their transportation options (e.g., one is easier to reach by bus or by foot), those are conducive 
+          to work or childcare schedules (e.g., open early, late, or on weekends), and those that align better with their personal needs 
+          and wants (e.g., faith-based versus secular; peer support for alcohol versus opioids, et cetera)."
+        ),
+        h4("Strength (Vibrancy) of Recovery Culture"),
+        p(
+          "Size of local recovery culture was estimated as the total number of weekly substance use disorder recovery meetings per week 
+          in each city/county. Places with many weekly meetings were inferred to be places with a large recovery culture. 
+          According to our data, Des Moines hosts about 213 weekly meetings, followed by Sioux City with 140 weekly meetings, 
+          and Cedar Rapids with 109 weekly meetings, ranking these towns in the top three, respectively, for size of recovery culture."
+        ),
+        p(
+          "One of the most valuable things we learned from our interviews with recovery community leaders in other states was the 
+          importance of the local recovery culture. Places where people with SUD were welcomed to participate in civic life, 
+          where SUD stigma was challenged, and where the recovery population had a habit of coming together to share their experiences, 
+          support each other, and collaborate on finding resources to rebuild lives often badly damaged by SUD, were described as being 
+          well-positioned for Recovery Community Centers. To identify which types of peer support meetings we should assess, we relied 
+          on our literature review of support meetings types, scoured recovery-oriented message boards and online discussion forums that 
+          discussed relevant terms and websites, and conducted an extensive internet search to identify a wide range of SUD oriented peer 
+          support groups in Iowa. We then used web scraping techniques to pull information from all identified support group meeting 
+          websites and create a dataset of key features including times, dates, and locations of every mutual aid and peer support meeting in Iowa."
+        ),
+        p(
+          strong("Data Limitation:"),
+          " Assessing the size of recovery culture produces two important limitations. 
+          First, our assessment of culture does not tell us anything specific about the size of the recovery population accessing 
+          the resources. For example, public records provide details on the number of meetings available but they do not indicate 
+          the size of the meeting groups. It is possible that some places have many of meetings, but only a small number of participants. 
+          Thus, we cannot directly infer size of recovery population but we can draw inferences about the intensity (engagement) of 
+          the recovery community. Second, when we measure of size of local recovery culture this way, it advantages larger towns and 
+          cities because places with a larger number of residents should, all else equal, have a larger number of weekly peer support 
+          meetings and places with fewer residents should have, by the same logic, a smaller number of weekly meetings. This measure 
+          does not identify the relative strength of these resources, such as communities that have more meetings than expected, given 
+          the size of town. We address this limitation with the measure of strength."
+        ),
+        h4("Recovery Ready Community Index"),
+        p(
+          "Once we had constructed each of the four, recovery ready sub-indexes, we created a summary measure, which we refer to as 
+          the Recovery Ready Community Index, or RRCI. This index is the simple average of each town's ranking across the four sub-indexes, 
+          including breadth and depth of local recovery resources and size and strength of local recovery culture. 
+          A town that scored highly on all four indexes received a high RRCI score, while a place that scored low on many or all four 
+          indexes received a low RRCI score. We report results of this work in Table 3, which lists the top 30 'recovery-ready' 
+          communities in Iowa and details their scores on each of the sub-indexes, their RRCI score, and their total population size. 
+          Sioux City, Mason City, Fort Dodge, Dubuque, and Ames fill out the top five recovery ready communities in Iowa, according to 
+          our measure. We also created maps of each of the four subcomponents of the RRCI to allow for visualization of how each of the 
+          30 target communities differ in the breadth and depth of their recovery resources/infrastructure and also in the size and 
+          strength score on the index. Algona, for example, is a ranked 27th on the RRCI, but because it only has 9 of 17 possible 
+          recovery resources, it received a lower breadth of recovery score (and a smaller circle on Figure 5 panel a). 
+          Algona has a large number of weekly peer support meetings, relative to its population size, which is why the circle for 
+          Algona is quite large in Figure 5 panel b."
+        ),
+        p(
+          "A strength of this index is that it captures a number of important and theoretically sound dimensions of substance 
+          use recovery in a relatively direct way with a single number and it does so in a way that does not disadvantage small towns. 
+          In fact, by our measure, 13 of the top 30 recovery ready communities in Iowa have populations of less than 15,000 residents. 
+          Based on our analysis, we suggest that IDPH could target any or all of these towns for RCC engagement. More broadly, we 
+          believe that the recovery population living in these places represent a valuable, and perhaps untapped resource in the community. 
+          By organizing the SUD recovery populations in these town around an RCC, host communities would have a simply way to coordinate 
+          and collaborate with the recovery population on substance use prevention, treatment, and recovery initiative."
+        ),
+        h3("In Support of Health Equity"),
+        p(
+          "We strove to create a recovery ready community measure that did not unduly preference large cities over smaller ones. 
+          The IDPH principle of health equity is a driving force behind efforts to limit place-based bias from community decision 
+          criteria whenever possible. With health equity in mind, we population-weighted the strength scores to reflect the average 
+          number of recovery meetings per person, per community, so they are comparable across towns and cities of all sizes, thus 
+          reducing the likelihood that we will undercount the value of small towns as potential hosts for Recovery Community Centers."
+        ),
+        p(
+          em(
+            "Equity in Action: Prior to adjustment, only 7 of the 30 communities identified as 'Recovery Ready' 
+            had populations of less than 15,000. After adjustment, 13 of the 30 communities selected were small towns."
+          )
+        )
+      )
+    ),
+    fluidRow(
+      style = "margin: 20px",
+      width = 12,
+      column(
+        width = 10, 
+        offset = 1,
+        category_module_ui("rrci", "rrci")
+      )
+    )
+  )
 }
