@@ -69,9 +69,7 @@ make_map = function(selection) {
 
 ## MAKE TABLE FUNCTION --------------------------------------
 make_table = function(category) {
-  print(category)
   category = stringr::str_replace_all(tolower(category), " ", "_")
-  print(category)
   selected_var = unique(rcc_labels_data$count_name[rcc_labels_data$category == category])
   var_pretty_names = unique(rcc_labels_data$drop_down_name[rcc_labels_data$category == category])
   
@@ -82,6 +80,7 @@ make_table = function(category) {
   reactable(
     table_data,
     pagination = FALSE,
+    compact = TRUE,
     defaultColDef = colDef(
       format = colFormat(separators = TRUE),
       style = function(value, index, name) {
@@ -723,6 +722,7 @@ what_is_recovery_ui = function(id) {
         width = 10,
         offset = 1,
         h2(strong("What is Recovery?")),
+        h3(tags$a(href="rrci_report.pdf", "Click Here to Download RRCI Report", download=NA, target="_blank")),
         p(
           "Though substance use recovery is an evolving concept that has been defined in a number of ways over the years, 
           an emerging consensus is that recovery is a voluntary path toward improved personal wellbeing coupled with a diminished 
@@ -747,7 +747,7 @@ what_is_recovery_ui = function(id) {
           "If we knew which resources were most helpful to long-run recovery, we could target towns and cities with large stocks of 
           'recovery resources' to grow Recovery Community Centers. To answer this question, we reviewed the scientific literature 
           on substance use recovery, giving special attention to theories of SUD recovery and frameworks that involved external resources. 
-          We also reviewed focus group data collected by Iowa’s HIPWUD Board to understand how Iowans who use drugs 
+          We also reviewed focus group data collected by Iowa's HIPWUD Board to understand how Iowans who use drugs 
           define recovery (HIPWUD, 2020). More broadly, we looked for models of recovery that included the community in which recovery 
           happens and the wider ecological factors, such as access to nature and connection to faith communities, 
           that constitute external recovery resources."
@@ -820,10 +820,10 @@ identifying_recovery_resources_ui = function(id) {
   tagList(
     fluidRow(
       style = "margin: 6px",
-      width = 10,
-      offset = 1,
+      width = 12,
       column(
-        width = 12,
+        width = 10,
+        offset = 1,
         h2(strong("Identifying Recovery Resources in Iowa")),
         p(
           "Based on our review of the literature, we identified a number of clinical and non-clinical community-based resources that 
@@ -990,8 +990,25 @@ rrci_ui = function(id){
       column(
         width = 10,
         offset = 1,
-        br(),
         h2(strong("Recovery Ready Communities")),
+        br()
+      )
+    ),
+    fluidRow(
+      style = "margin-left: 6px; margin-right: 6px",
+      width = 12,
+      column(
+        width = 10, 
+        offset = 1,
+        category_module_ui("rrci", "rrci")
+      )
+    ),
+    fluidRow(
+      style = "margin-left: 6px; margin-right: 6px",
+      width = 12,
+      column(
+        width = 10,
+        offset = 1,
         p(
           "Recovery Community Centers (RCCs) are a low-cost, member driven, voluntarist, locally managed, and community-based 
             intervention aimed at supporting sustainable recovery for people with substance use disorder, or SUD. 
@@ -1055,20 +1072,19 @@ rrci_ui = function(id){
           received a low average ranking (e.g., if you were a top-ten ranked city on each of the indicators, your average score would 
           be 10 or less). Cities with fewer resources, especially those who faced resource scarcity over multiple categories, received 
           a higher average ranking (e.g., if a community was ranked 50th or higher on every category, their average score would be at 
-          least 50).  Des Moines had the most favorable ranking on this index with a score of 6, meaning that Des Moines’ average ranking 
+          least 50).  Des Moines had the most favorable ranking on this index with a score of 6, meaning that Des Moines' average ranking 
           across all 17 resources was six, followed by Ames (16) and Dubuque (29)."
         ),
-        h4("Size of Recovery Culture"),
         p(
           "The goal of the measure was to identify communities with diverse stocks of each resource to help facilitate long-run, 
-          sustainable recovery. When individuals need medical support, for example, communities with a larger number of clinics and 
-          hospitals may be able to provide more rapid, customizable, and culturally-appropriate care. When communities have a variety 
-          of options for each resource category, people can engage resources that make sense for their personal recovery journey, 
-          such as those that match their transportation options (e.g., one is easier to reach by bus or by foot), those are conducive 
-          to work or childcare schedules (e.g., open early, late, or on weekends), and those that align better with their personal needs 
-          and wants (e.g., faith-based versus secular; peer support for alcohol versus opioids, et cetera)."
+          sustainable recovery. When individuals need medical support, for example, communities with a larger number of clinics 
+          and hospitals may be able to provide more rapid, customizable, and culturally-appropriate care. When communities have 
+          a variety of options for each resource category, people can engage resources that make sense for their personal recovery 
+          journey, such as those that match their transportation options (e.g., one is easier to reach by bus or by foot), those 
+          are conducive to work or childcare schedules (e.g., open early, late, or on weekends), and those that align better with 
+          their personal needs and wants (e.g., faith-based versus secular; peer support for alcohol versus opioids, et cetera)."
         ),
-        h4("Strength (Vibrancy) of Recovery Culture"),
+        h4("Size of Recovery Culture"),
         p(
           "Size of local recovery culture was estimated as the total number of weekly substance use disorder recovery meetings per week 
           in each city/county. Places with many weekly meetings were inferred to be places with a large recovery culture. 
@@ -1098,6 +1114,16 @@ rrci_ui = function(id){
           meetings and places with fewer residents should have, by the same logic, a smaller number of weekly meetings. This measure 
           does not identify the relative strength of these resources, such as communities that have more meetings than expected, given 
           the size of town. We address this limitation with the measure of strength."
+        ),
+        h4("Strength (Vibrancy) of Recovery Culture"),
+        p(
+          "The strength of the recovery community is measured as the difference between the observed number of weekly meetings and 
+          the number of meetings expected, based upon the total population of each town. This number was expressed as a percentage 
+          difference between observed and predicted number of weekly peer support meetings. According to this measure, the town of 
+          Harlan has 515 percent more weekly meetings than expected. Sioux City had 175 percent more weekly meetings than expected, 
+          and Des Moines had 6 percent fewer weekly meetings than expected, given the size of its population. By combining our 
+          measures of size and strength of local recovery culture, we are able to treat small and large towns with greater equity, 
+          keeping with IDPH's mission to deliver health services equitably to the people and communities of Iowa."
         ),
         h4("Recovery Ready Community Index"),
         p(
@@ -1138,15 +1164,6 @@ rrci_ui = function(id){
             had populations of less than 15,000. After adjustment, 13 of the 30 communities selected were small towns."
           )
         )
-      )
-    ),
-    fluidRow(
-      style = "margin: 20px",
-      width = 12,
-      column(
-        width = 10, 
-        offset = 1,
-        category_module_ui("rrci", "rrci")
       )
     )
   )
