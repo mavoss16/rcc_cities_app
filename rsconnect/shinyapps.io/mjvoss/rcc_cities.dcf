@@ -1,0 +1,12 @@
+name: rcc_cities
+title: rcc_cities
+username:
+account: mjvoss
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3661645
+bundleId: 4242938
+url: https://mjvoss.shinyapps.io/rcc_cities/
+when: 1613690741.31418
+asMultiple: FALSE
+asStatic: FALSE

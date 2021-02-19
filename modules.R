@@ -137,10 +137,10 @@ variable_select_server = function(id) {
 map_ui = function(id) {
   ns = NS(id)
   if(id == "rrci-map"){
-    width_amount = "1150px"
+    width_amount = "1000px"
   }
   else{
-    width_amount = "100%"
+    width_amount = "95%"
   }
   # assemble UI elements
   tagList(
@@ -148,7 +148,7 @@ map_ui = function(id) {
     #h6(textOutput(ns("lab"))),
     
     #leafletOutput(ns("map"), width = "1150px", height = "500px")
-    leafletOutput(ns("map"), width = width_amount, height = "500px")
+    leafletOutput(ns("map"), width = width_amount)
     # Maybe use if statement to adjust for first page
   )
 }
@@ -196,7 +196,7 @@ table_ui = function(id) {
     ),
     #h5(textOutput(ns("var"))),
     #h6(textOutput(ns("lab"))),
-    reactableOutput(ns("table"), width = "1250px")
+    reactableOutput(ns("table"), width = "105%")
   )
 }
 
@@ -448,8 +448,8 @@ sources_ui = function(id) {
         )
       )
     )
-    ## Primary Care Resources
-  } else if (id == "primary_care_resources") {
+    ## Health Resources
+  } else if (id == "health_resources") {
     tagList(
       fluidRow(
         style = "margin: 6px",
@@ -523,8 +523,8 @@ sources_ui = function(id) {
         )
       )
     )
-    ## Social and Economic Resources
-  } else if(id == "social_and_economic_resources"){
+    ## Other Resources
+  } else if(id == "other_resources"){
     tagList(
       fluidRow(
         style = "margin: 6px",
