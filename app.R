@@ -48,7 +48,7 @@ ui = fluidPage(
   fluidRow(
     width = 12,
     align = "left",
-    h1(strong("Iowa's Recovery Ready Community Network")),
+    h1(strong(tags$a(href = "https://mjvoss.shinyapps.io/rcc_cities/", "Iowa's Recovery Ready Community Network", style = "color: white"))),
     style = "background-color: #373A3C; color: white; margin-left: auto; margin-right: auto"
   ),
   # titlePanel(
@@ -58,6 +58,14 @@ ui = fluidPage(
   navbarPage(
     title = NULL,
     windowTitle = "Iowa's Recovery Ready Community Network",
+    
+    ## |__Home tab---------------------------------------------------------------------------------------
+    tabPanel(
+      "Home",
+      fluidRow(
+        
+      )
+    ),
     
     ## |__What is Recovery? tab --------------------------------------------------------------------------------
     tabPanel(
@@ -92,7 +100,10 @@ ui = fluidPage(
             title = "Data Table",
             table_module_ui("recovery_resources", "recovery_resources")
           ),
-          tabPanel(title = "Data Sources", sources_ui("recovery_resources"))
+          tabPanel(
+            title = "Data Sources", 
+            source_table_module_ui("recovery_resources", "recovery_resources")
+          )
         )
       )
     ),
@@ -112,7 +123,10 @@ ui = fluidPage(
             title = "Data Table",
             table_module_ui("health_resources", "health_resources")
           ),
-          tabPanel(title = "Data Sources", sources_ui("health_resources"))
+          tabPanel(
+            title = "Data Sources", 
+            source_table_module_ui("health_resources", "health_resources")
+          )
         )
       )
     ),
@@ -127,18 +141,21 @@ ui = fluidPage(
           tabPanel(
             title = "Maps and Indicators",
             category_module_ui(
-              "other_resources",
-              "other_resources"
+              "other_community_resources",
+              "other_community_resources"
             )
           ),
           tabPanel(
             title = "Data Table",
             table_module_ui(
-              "other_resources",
-              "other_resources"
+              "other_community_resources",
+              "other_community_resources"
             )
           ),
-          tabPanel(title = "Data Sources", sources_ui("other_resources"))
+          tabPanel(
+            title = "Data Sources", 
+            source_table_module_ui("other_community_resources", "other_community_resources")
+          )
         )
       )
     ),
@@ -184,7 +201,10 @@ ui = fluidPage(
             title = "Data Table",
             table_module_ui("community_characteristics", "community_characteristics")
           ),
-          tabPanel(title = "Data Sources", sources_ui("community_characteristics"))
+          tabPanel(
+            title = "Data Sources", 
+            source_table_module_ui("community_characteristics", "community_characteristics")
+          )
         )
       )
     ),
@@ -232,12 +252,16 @@ server = function(input, output, session) {
   res_rrci = category_module_server("rrci")
   res_reco = category_module_server("recovery_resources")
   res_reco_table = table_module_server("recovery_resources")
-  res_soc_econ = category_module_server("other_resources")
-  res_soc_econ_table = table_module_server("other_resources")
-  res_prim_care = category_module_server("health_resources")
-  res_prim_care_table = table_module_server("health_resources")
+  res_reco_source_table = source_table_module_server("recovery_resources")
+  res_other = category_module_server("other_community_resources")
+  res_other_table = table_module_server("other_community_resources")
+  res_other_source_table = source_table_module_server("other_community_resources")
+  res_health = category_module_server("health_resources")
+  res_health_table = table_module_server("health_resources")
+  res_health_source_table = source_table_module_server("health_resources")
   res_comm = category_module_server("community_characteristics")
   res_comm_table = table_module_server("community_characteristics")
+  res_comm_source_table = source_table_module_server("community_characteristics")
   #res_demo = category_module_server("demographic_characteristics")
   #res_demo_table = table_module_server("demographic_characteristics")
 }

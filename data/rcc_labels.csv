@@ -1,49 +1,33 @@
 category,variable_name,drop_down_name,count_name,rank_name,data_source,collection_method,variable_description,url
-recovery_resources,mutual_aid_meeting,Mutual Aid Meetings,mutual_aid_meeting_count,mutual_aid_meeting_rank,"AA-Iowa
-NA-Iowa
-AdultChildren.org
-Al-Anon.org
-DRAOnline
-Nar-Anon.org
-SmartRecoveryTest.org
-CRGroups Locator
-CRUSH Of Iowa Facebook Page
-RefugeRecovery.org
-PillsAnonymous.org",Scraped,Number of Mutual Aid Meetings in each city,
-recovery_resources,meetings_per_10000,"Mutual Aid Meetings per 10,000 People",meetings_per_10000_count,meetings_per_10000_rank,"Mutual Aid Meetings data, ACS 2014/18 Population Estimate","Scraped, ACS API","Number of Mutual Aid Meetings in each city, divided by the ACS 2014/18 population estimate, and multiplied by 10,000",
+recovery_resources,mutual_aid_meeting,Mutual Aid Meetings,mutual_aid_meeting_count,mutual_aid_meeting_rank,AA-Iowa; NA-Iowa; AdultChildren.org; Al-Anon.org; DRAOnline; Nar-Anon.org; SmartRecoveryTest.org; CRGroups Locator; CRUSH Of Iowa Facebook Page; RefugeRecovery.org; PillsAnonymous.org,Scraped,Number of Mutual Aid Meetings in each city,
+recovery_resources,meetings_per_10000,"Mutual Aid Meetings per 10,000 People",meetings_per_10000_count,meetings_per_10000_rank,Mutual Aid Meetings data; ACS 2014/18 Population Estimate,"Scraped, ACS API","Number of Mutual Aid Meetings in each city, divided by the ACS 2014/18 population estimate, and multiplied by 10,000",
 recovery_resources,peer_support_providers,Peer Support Providers,peer_support_providers_count,peer_support_providers_rank,"Todd Lange,  Recovery & Resiliency Coordinator within AmeriCorp",By Hand,Number of Peer Support Providers in each city,
 recovery_resources,drug_drop_off,Drug Drop Off Locations,drug_drop_off_count,drug_drop_off_rank,Iowa Office of Drug Control Policy,Downloaded,Number of Drug Drop Off Locations in each city,
 recovery_resources,sud_gambling,SUD and Problem Gambling Treatment Locations,sud_gambling_count,sud_gambling_rank,Iowa Department of Public Health,Read in PDF,Number of SUD and Problem Gambling Treatment Locations in each city,
-recovery_resources,recovery_housing,Recovery Housing,recovery_housing_count,recovery_housing_rank,"AllTreatment.com
-TransitionalHousing.org
-WomenSoberHousing.com
-Addicted.org
-Recovery.org
-Drug-rehabs.org",Scraped,Number of Recovery Housing Locations in each city,
-recovery_resources,mat,Medically Assisted Treatment Locations,mat_count,mat_rank,Iowa Department of Public Health,Scraped?,Number of Medically Assisted Treatment Locations in each city,
+recovery_resources,recovery_housing,Recovery Housing,recovery_housing_count,recovery_housing_rank,AllTreatment.com; TransitionalHousing.org; WomenSoberHousing.com; Addicted.org; Recovery.org; Drug-rehabs.org,Scraped,Number of Recovery Housing Locations in each city,
+recovery_resources,mat,Medically Assisted Treatment Locations,mat_count,mat_rank,Iowa Department of Public Health,Scraped,Number of Medically Assisted Treatment Locations in each city,
 health_resources,hospital,Hospitals,hospital_count,hospital_rank,Wikipedia list of Iowa hospitals,Scraped,Number of Hospitals in each city,
 health_resources,mental_health_center,Mental Health Centers,mental_health_center_count,mental_health_center_rank,Iowa Department of Human Services,Read in PDF,Number of Mental Health Centers in each city,
 health_resources,rural_clinic,Rural Clinics,rural_clinic_count,rural_clinic_rank,Iowa Association of Rural Health Clinics,Scraped,Number of Rural Clinics in each city,
 health_resources,va_hc,VA Health Centers,va_hc_count,va_hc_rank,U.S. Department of Veterans Affairs,Scraped,Number of VA Health Centers in each city,
-other_resources,law_enforcement,Law Enforcement Offices,law_enforcement_count,law_enforcement_rank,Homeland Infrastructure Foundation-Level Data,Downloaded,Number of Law Enforcement Offices in each city,
-other_resources,college,Colleges,college_count,college_rank,Wikipedia list of Iowa colleges and universities,Scraped,Number of Colleges in each city,
-other_resources,childcare_provider,Childcare Providers,childcare_provider_count,childcare_provider_rank,Iowa Department of Human Services,Downloaded,Number of Childcare Providers in each city,
-other_resources,church,Places of Worship,church_count,church_rank,USGS Geographic Names Information System,Downloaded,Number of Places of Worship in each city,
-other_resources,workforce_development_centers,Workforce Development Centers,workforce_development_centers_count,workforce_development_centers_rank,Iowa Workforce Development,Scraped,Number of Workforce Development Centers in each city,
-other_resources,library,Libraries,library_count,library_rank,"Institute of Museum and Library Services, Public Libraries Survey",Downloaded,Number of Libraries in each city,
-other_resources,park,Parks,park_count,park_rank,MyCountyParks.com,Scraped,Number of Parks in each city,
-community_characteristics,pct_white,Percent White Population,pct_white,,,,,
-community_characteristics,pct_nonwhite,Percent Nonwhite Population,pct_nonwhite,,,,,
-community_characteristics,pct_under18,Percent Under 18,pct_under18,,,,,
-community_characteristics,pct_over65,Percent Over 65,pct_over65,,,,,
-community_characteristics,median_ageE,Median Age,median_ageE,,,,,
-community_characteristics,pct_hs,Percent With a High School Degree,pct_hs,,,,,
-community_characteristics,pct_bach,Percent With a Bachelor's Degree,pct_bach,,,,,
-community_characteristics,pct_poverty,Percent Below the Poverty Line,pct_poverty,,,,,
-community_characteristics,median_household_incomeE,Median Household Income,median_household_incomeE,,,,,
-community_characteristics,pct_snap,Percent SNAP recipients,pct_snap,,,,,
-community_characteristics,pct_internet,Percent With Internet Access,pct_internet,,,,,
-community_characteristics,avg_commute,Average Commute Time,avg_commute,,,,,
+other_community_resources,childcare_provider,Childcare Providers,childcare_provider_count,childcare_provider_rank,Iowa Department of Human Services,Downloaded,Number of Childcare Providers in each city,
+other_community_resources,college,Colleges,college_count,college_rank,Wikipedia list of Iowa colleges and universities,Scraped,Number of Colleges in each city,
+other_community_resources,church,Places of Worship,church_count,church_rank,USGS Geographic Names Information System,Downloaded,Number of Places of Worship in each city,
+other_community_resources,workforce_development_centers,Workforce Development Centers,workforce_development_centers_count,workforce_development_centers_rank,Iowa Workforce Development,Scraped,Number of Workforce Development Centers in each city,
+other_community_resources,law_enforcement,Law Enforcement Offices,law_enforcement_count,law_enforcement_rank,Homeland Infrastructure Foundation-Level Data,Downloaded,Number of Law Enforcement Offices in each city,
+other_community_resources,library,Libraries,library_count,library_rank,"Institute of Museum and Library Services, Public Libraries Survey",Downloaded,Number of Libraries in each city,
+other_community_resources,park,Parks,park_count,park_rank,MyCountyParks.com,Scraped,Number of Parks in each city,
+community_characteristics,pct_poverty,Below Poverty Line (%),pct_poverty,,ACS 2015/19 Subject B17,ACS API,Number of households below poverty line divided by total households,
+community_characteristics,median_household_incomeE,Median Household Income,median_household_incomeE,,ACS 2015/19 Subject B19,ACS API,Median household income,
+community_characteristics,pct_snap,SNAP Recipients (%),pct_snap,,ACS 2015/19 Subject B22,ACS API,Number of households receiving SNAP divided by total households,
+community_characteristics,pct_hs,High School Degree (%),pct_hs,,ACS 2015/19 Subject B20,ACS API,Number of people with a high school degree divided by total population,
+community_characteristics,pct_bach,Bachelor's Degree (%),pct_bach,,ACS 2015/19 Subject B20,ACS API,Number of people with a bachelor's degree divided by total population,
+community_characteristics,pct_internet,Internet Access (%),pct_internet,,ACS 2015/19 Subject B28,ACS API,Number of households with internet access divided by total households,
+community_characteristics,avg_commute,Average Commute Time,avg_commute,,ACS 2015/19 Subject B08,ACS API,Total commuting minutes divided by total individuals,
+community_characteristics,pct_nonwhite,Nonwhite (%),pct_nonwhite,,ACS 2015/19 Subject B02 ,ACS API,Nonwhite population divided by total population,
+community_characteristics,pct_under18,Under 18 (%),pct_under18,,ACS 2015/19 Subject B01,ACS API,Under 18 population divided by total population,
+community_characteristics,pct_over65,Over 65 (%),pct_over65,,ACS 2015/19 Subject B01,ACS API,Over 65 population divided by total population,
+community_characteristics,median_ageE,Median Age,median_ageE,,ACS 2015/19 Subject B01,ACS API,Median age,
 rrci,rrci_score,Recovery Ready Community Score,rrci_score,,,,,
 rrci,breadth_score,Breadth Score,breadth_score,,,,,
 rrci,depth_rank,Depth Ranking,depth_rank,,,,,

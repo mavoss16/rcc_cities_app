@@ -75,30 +75,85 @@ make_table = function(category) {
   
   table_data = rcc_city_data %>% select(all_of(c("city", "county", "rrci_rank", selected_var)))
   
-  names(table_data) = c("City", "County", "RRCI Rank", var_pretty_names)
+  names(table_data) = c("city", "county", "rrci_rank", var_pretty_names)
+  
+  max_width = ifelse(category == "community_characteristics", 85, 100)
+  font_size = ifelse(category == "community_characteristics", "10px", "13px")
+  city_width = ifelse(category == "community_characteristics", 85, 100)
+  county_width = ifelse(category == "community_characteristics", 90, 110)
   
   reactable(
     table_data,
     pagination = FALSE,
     compact = TRUE,
+    style = list(fontSize = font_size),
+    columns = list(
+      city = colDef(
+        name = "City",
+        width = city_width
+      ),
+      county = colDef(
+        name = "County",
+        width = county_width
+      ),
+      rrci_rank = colDef(
+        name = "RRCI Rank",
+        width = 70,
+        style = function(value, index, name){
+          green_pal = colorNumeric(colorRamp(c("#ffffff", "#71CA97")),
+                                   domain = c(min(table_data[, name]), max(table_data[, name])),
+                                   reverse = TRUE)
+          list(background = green_pal(value))
+        }
+      )
+    ),
     defaultColDef = colDef(
       format = colFormat(separators = TRUE),
+      maxWidth = max_width,
       style = function(value, index, name) {
-        if (name != "City" && name != "County") {
-          if (name == "RRCI Rank") {
-            green_pal = colorNumeric(colorRamp(c("#ffffff", "#71CA97")),
-                                     domain = c(min(table_data[, name]), max(table_data[, name])),
-                                     reverse = TRUE)
-          }
-          else{
-            green_pal = colorNumeric(colorRamp(c("#ffffff", "#71CA97")), domain = c(min(table_data[, name]), max(table_data[, name])))
-          }
+        if (name != "city" && name != "county" && name != "rrci") {
+          green_pal = colorNumeric(colorRamp(c("#ffffff", "#71CA97")), domain = c(min(table_data[, name]), max(table_data[, name])))
           list(background = green_pal(value))
         }
         else{
           list(background = "#ffffff")
         }
       }
+    )
+  )
+}
+
+
+
+## MAKE SOURCE TABLE FUNCTION --------------------------------------
+make_source_table = function(category) {
+  category = stringr::str_replace_all(tolower(category), " ", "_")
+  sources = rcc_labels_data[rcc_labels_data$category == category,]
+
+  sources = sources %>% select(drop_down_name, data_source, collection_method, variable_description)
+  #names(sources) = c("Variable", "Data Source", "Collection Method", "Description")
+
+  reactable(
+    sources,
+    pagination = FALSE,
+    compact = FALSE,
+    columns = list(
+      drop_down_name = colDef(
+        name = "Variable",
+        width = 150
+      ),
+      data_source = colDef(
+        name = "Data Source",
+        width = 250
+      ),
+      collection_method = colDef(
+        name = "Collection Method",
+        width = 110
+      ),
+      variable_description = colDef(
+        name = "Description",
+        width = 250
+      )
     )
   )
 }
@@ -293,6 +348,65 @@ category_module_server = function(id) {
 }
 
 
+
+## DEFINE UI and SERVER FOR SOURCE TABLE -------------------------------------------------------------
+source_table_ui = function(id) {
+  ns = NS(id)
+  table_title = stringr::str_replace_all(id, "_", " ") %>% stringr::str_replace_all("-source table", " Data Sources Table") %>% tools::toTitleCase()
+  
+  # assemble UI elements
+  tagList(
+    h4(strong(table_title), align = "left"),
+    #h5(textOutput(ns("var"))),
+    #h6(textOutput(ns("lab"))),
+    reactableOutput(ns("source_table"), width = "105%")
+  )
+}
+
+source_table_server = function(id, category) {
+  moduleServer(id,
+               function(input, output, session) {
+                 source_table = reactive({
+                   return(make_source_table(category))
+                 })
+                 
+                 # var = reactive({
+                 #   var = selections$variable()
+                 #   return(var)
+                 # })
+                 
+                 # Label to go above the map. Would need to add to labels sheet
+                 # lab = reactive({
+                 #   lab = unique(rcc_labels_data$drop_down_name[rcc_labels_data$sub_domain == selections$subdomain()])
+                 #   return(lab)
+                 # })
+                 
+                 output$source_table = renderReactable({
+                   source_table()
+                 })
+                 #output$var = renderText({ var() })
+                 #output$lab = renderText({ lab() })
+               })
+}
+
+
+## SOURCE TABLE PAGE MODULE UI & SERVER -------------------------------------
+source_table_module_ui = function(id, category) {
+  ns = NS(id)
+  tagList(fluidRow(
+    style = "margin: 6px",
+    width = 12,
+    column(12, align = "left",
+           source_table_ui(ns("source_table")))
+  ))
+}
+
+source_table_module_server = function(id) {
+  moduleServer(id,
+               function(input, output, session) {
+                 source_tables = source_table_server("source_table", id)
+               })
+}
 
 ## MAKE MODULES FOR SOURCES TABS ------------------------------------------------------------------------
 ## Ideally, this should probably become a function.
@@ -524,7 +638,7 @@ sources_ui = function(id) {
       )
     )
     ## Other Resources
-  } else if(id == "other_resources"){
+  } else if(id == "other_community_resources"){
     tagList(
       fluidRow(
         style = "margin: 6px",
