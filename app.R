@@ -63,7 +63,8 @@ ui = fluidPage(
     tabPanel(
       "Home",
       fluidRow(
-        
+        style = "margin-left: 6px; margin-right: 6px",
+        home_ui("home")
       )
     ),
     

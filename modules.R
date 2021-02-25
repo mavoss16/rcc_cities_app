@@ -171,7 +171,7 @@ variable_select_ui = function(id, category) {
   tagList(
     h4(strong("Selector"), align = "left"),
     p(),
-    selectInput(ns("which_variable"), "Variable", choices = variable_options),
+    selectInput(ns("which_variable"), "Resource", choices = variable_options),
     p()
   )
 }
@@ -1278,6 +1278,22 @@ rrci_ui = function(id){
             had populations of less than 15,000. After adjustment, 13 of the 30 communities selected were small towns."
           )
         )
+      )
+    )
+  )
+}
+## MAKE HOME MODULE--------------------------------------------------------------------
+home_ui = function(id){
+  ns = NS(id)
+  
+  tagList(
+    fluidRow(
+      style = "margin-left: 6px; margin-right: 6px",
+      width = 12,
+      column(
+        width = 10,
+        offset = 1,
+        h3(tags$a(href="rrci_report.pdf", "Click Here to Download RRCI Report", download=NA, target="_blank"))
       )
     )
   )
