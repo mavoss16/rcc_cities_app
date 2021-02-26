@@ -43,7 +43,6 @@ ui = fluidPage(
       height = "600",
       style = "display: block; margin-left: auto; margin-right: auto;"
     )
-    # Could use width = "1070" to keep from stretching
   ),
   fluidRow(
     width = 12,
@@ -94,7 +93,7 @@ ui = fluidPage(
         navlistPanel(
           widths = c(2, 10),
           tabPanel(
-            title = "Maps and Indicators",
+            title = "Map",
             category_module_ui("recovery_resources", "recovery_resources")
           ),
           tabPanel(
@@ -117,7 +116,7 @@ ui = fluidPage(
         navlistPanel(
           widths = c(2, 10),
           tabPanel(
-            title = "Maps and Indicators",
+            title = "Map",
             category_module_ui("health_resources", "health_resources")
           ),
           tabPanel(
@@ -140,7 +139,7 @@ ui = fluidPage(
         navlistPanel(
           widths = c(2, 10),
           tabPanel(
-            title = "Maps and Indicators",
+            title = "Map",
             category_module_ui(
               "other_community_resources",
               "other_community_resources"
@@ -155,7 +154,10 @@ ui = fluidPage(
           ),
           tabPanel(
             title = "Data Sources", 
-            source_table_module_ui("other_community_resources", "other_community_resources")
+            source_table_module_ui(
+              "other_community_resources", 
+              "other_community_resources"
+            )
           )
         )
       )
@@ -169,7 +171,7 @@ ui = fluidPage(
     #     navlistPanel(
     #       widths = c(2, 10),
     #       tabPanel(
-    #         title = "Maps and Indicators",
+    #         title = "Map",
     #         category_module_ui(
     #           "demographic_characteristics",
     #           "demographic_characteristics"
@@ -195,7 +197,7 @@ ui = fluidPage(
         navlistPanel(
           widths = c(2, 10),
           tabPanel(
-            title = "Maps and Indicators",
+            title = "Map",
             category_module_ui("community_characteristics", "community_characteristics")
           ),
           tabPanel(

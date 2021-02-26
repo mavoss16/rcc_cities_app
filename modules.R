@@ -245,7 +245,7 @@ table_ui = function(id) {
   
   # assemble UI elements
   tagList(
-    h4(strong(table_title), align = "left"),
+    h3(strong(table_title), align = "left"),
     p(
       "The table rows are initially sorted by RRCI rank. Click on a column name to sort the rows by that column's values."
     ),
@@ -356,9 +356,12 @@ source_table_ui = function(id) {
   
   # assemble UI elements
   tagList(
-    h4(strong(table_title), align = "left"),
+    h3(strong(table_title), align = "left"),
     #h5(textOutput(ns("var"))),
     #h6(textOutput(ns("lab"))),
+    p(
+      "This table gives information about each of the variables in this category. There is also a list underneath the table with links to each of the data sources"
+    ),
     reactableOutput(ns("source_table"), width = "105%")
   )
 }
@@ -393,12 +396,26 @@ source_table_server = function(id, category) {
 ## SOURCE TABLE PAGE MODULE UI & SERVER -------------------------------------
 source_table_module_ui = function(id, category) {
   ns = NS(id)
-  tagList(fluidRow(
-    style = "margin: 6px",
-    width = 12,
-    column(12, align = "left",
-           source_table_ui(ns("source_table")))
-  ))
+  tagList(
+    fluidRow(
+      style = "margin: 6px",
+      width = 12,
+      column(
+        width = 12, 
+        align = "left",
+        source_table_ui(ns("source_table"))
+      )
+    ),
+    fluidRow(
+      style = "margin: 6px",
+      width = 12,
+      column(
+        width = 12,
+        aligh = "left",
+        sources_ui(category)
+      )
+    )
+  )
 }
 
 source_table_module_server = function(id) {
@@ -408,7 +425,7 @@ source_table_module_server = function(id) {
                })
 }
 
-## MAKE MODULES FOR SOURCES TABS ------------------------------------------------------------------------
+## MAKE MODULES FOR SOURCES LINKS LIST ------------------------------------------------------------------------
 ## Ideally, this should probably become a function.
 sources_ui = function(id) {
   ns = NS(id)
@@ -424,141 +441,51 @@ sources_ui = function(id) {
         column(
           12,
           align = "left",
-          h3(strong(title, " Data Methods")),
+          h3(strong(title, " Website Links")),
           p(
-            "Click on the sources to open links (where possible) from which the data was collected."
-          )
-        )
-      ),
-      ## First row of boxes (2 boxes)
-      fluidRow(
-        style = "margin: 6px",
-        width = 12,
-        column(
-          6,
-          wellPanel(
-            strong('Mutual Aid Meetings'),
-            p(),
-            em('Source(s):'),
-            br(),
-            tags$a(href = "https://www.aa-iowa.org/meetings/", "Alcoholics Anonymous - Iowa"),
-            br(),
-            tags$a(href = "https://www.na-iowa.org/meetings/", "Narcotics Anonymous - Iowa"),
-            br(),
-            tags$a(href = "https://adultchildren.org/mtsearch", "Adult Children of Alcoholics"),
-            br(),
-            tags$a(href = "https://al-anon.org/al-anon-meetings/find-an-alateen-meeting/", "Al-Anon"),
-            br(),
-            tags$a(href = "http://draonline.qwknetllc.com/meetings_dra/usa/iowa.html", "Dual Recovery Anonymous"),
-            br(),
-            tags$a(href = "https://www.nar-anon.org/", "Nar-Anon"),
-            br(),
-            tags$a(href = "https://www.smartrecoverytest.org/local/full-meeting-list-download/", "SMART"),
-            br(),
-            tags$a(href = "https://locator.crgroups.info/", "Celebrate Recovery"),
-            br(),
-            tags$a(href = "https://www.facebook.com/crushofiowa/", "CRUSH"),
-            br(),
-            tags$a(href = "https://refugerecovery.org/meetings?tsml-day=any&tsml-region=iowa", "Refuge Recovery"),
-            br(),
-            tags$a(href = "https://www.pillsanonymous.org/meetings/find-a-meeting/", "Pills Anonymous"),
-            br(),
-            p(),
-            em("Methods:"),
-            br(),
-            p("Counted the number of mutual aid meetings by city.")
-          )
-        ),
-        column(
-          6,
-          wellPanel(
-            strong('Mutual Aid Meetings Per 10,000'),
-            p(),
-            em('Source(s):'),
-            br(),
-            p("Mutual Aid Meetings Data"),
-            tags$a(
-              href = "https://www.census.gov/programs-surveys/acs",
-              "American Community Survey 2014/18 (5-year) Population Estimates"
-            ),
-            br(),
-            p(),
-            em("Methods:"),
-            br(),
-            p(
-              "Counted the number of mutual aid meetings by city, divided by the ACS 2014/18 population estimate, and multiplied by 10,000."
-            )
-          )
-        ),
-        ## Second row of boxes (2 boxes)
-        fluidRow(
-          style = "margin: 6px",
-          width = 12,
-          column(6,
-                 wellPanel(
-                   strong('Peer Support Providers'),
-                   p(),
-                   em('Source(s):'),
-                   br(),
-                   p(
-                     "Todd Lange, Recovery & Resilience Coordinator within AmeriCorp"
-                   ),
-                   br(),
-                   p(),
-                   em("Methods:"),
-                   br(),
-                   p("Counted the number of peer support providers by city.")
-                 )),
-          column(6,
-                 wellPanel(
-                   strong('Drug Drop Off Locations'),
-                   p(),
-                   em('Source(s):'),
-                   br(),
-                   tags$a(href = "https://iowa.maps.arcgis.com/apps/webappviewer/index.html?id=5377c6", "Iowa Office of Drug Control Policy"),
-                 )),
-          ## 3rd row of boxes (3 boxes)
-          fluidRow(
-            style = "margin: 6px",
-            width = 12,
-            column(4,
-                   wellPanel(
-                     strong('SUD and Problem Gambling Treatment Locations'),
-                     p(),
-                     em('Source(s):'),
-                     br(),
-                     tags$a(href = "https://idph.iowa.gov/Portals/1/userfiles/166/Licensure/All%", "Iowa Department of Public Health"),
-                   )),
-            column(
-              4,
-              wellPanel(
-                strong('Recovery Housing'),
-                p(),
-                em('Source(s):'),
-                br(),
-                tags$a(href = "https://www.alltreatment.com/ia/accredited/", "AllTreatment.com"),
-                br(),
-                tags$a(href = "https://www.transitionalhousing.org/state/Iowa", "TransitionalHousing.org"),
-                br(),
-                tags$a(href = "https://www.womensoberhousing.com/state/iowa.html", "WomenSoberHousing.com"),
-                br(),
-                tags$a(href = "https://www.addicted.org/iowa-long-term-drug-rehab.html", "Addicted.org"),
-                br(),
-                tags$a(href = "https://www.recovery.org/browse/Iowa/", "Recovery.org"),
-                br(),
-                tags$a(href = "https://www.drug-rehabs.org/Iowa-drug-rehab-alcohol-rehabs-program.htm", "Drug-rehabs.org")
-              )
-            ),
-            column(4,
-                   wellPanel(
-                     strong('Medically Assisted Treatment Locations'),
-                     p(),
-                     em('Source(s):'),
-                     br(),
-                     tags$a(href = "https://idph.iowa.gov/mat", "Iowa Department of Public")
-                   )
-            )
-          )
+            "Click on the links below to see the sources of the data."
+          ),
+          tags$a(href = "https://www.aa-iowa.org/meetings/", "Alcoholics Anonymous - Iowa", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.na-iowa.org/meetings/", "Narcotics Anonymous - Iowa", target = "_blank"),
+          br(),
+          tags$a(href = "https://adultchildren.org/mtsearch", "Adult Children of Alcoholics", target = "_blank"),
+          br(),
+          tags$a(href = "https://al-anon.org/al-anon-meetings/find-an-alateen-meeting/", "Al-Anon", target = "_blank"),
+          br(),
+          tags$a(href = "http://draonline.qwknetllc.com/meetings_dra/usa/iowa.html", "Dual Recovery Anonymous", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.nar-anon.org/", "Nar-Anon", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.smartrecoverytest.org/local/full-meeting-list-download/", "SMART", target = "_blank"),
+          br(),
+          tags$a(href = "https://locator.crgroups.info/", "Celebrate Recovery", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.facebook.com/crushofiowa/", "CRUSH", target = "_blank"),
+          br(),
+          tags$a(href = "https://refugerecovery.org/meetings?tsml-day=any&tsml-region=iowa", "Refuge Recovery", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.pillsanonymous.org/meetings/find-a-meeting/", "Pills Anonymous", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.census.gov/programs-surveys/acs", "American Community Survey 2014/18 (5-year) Population Estimates", target = "_blank"),
+          br(),
+          tags$a(href = "https://iowa.maps.arcgis.com/apps/webappviewer/index.html?id=5377c6", "Iowa Office of Drug Control Policy", target = "_blank"),
+          br(),
+          tags$a(href = "https://idph.iowa.gov/Portals/1/userfiles/166/Licensure/All%", "Iowa Department of Public Health"),
+          br(),
+          tags$a(href = "https://www.alltreatment.com/ia/accredited/", "AllTreatment.com", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.transitionalhousing.org/state/Iowa", "TransitionalHousing.org", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.womensoberhousing.com/state/iowa.html", "WomenSoberHousing.com", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.addicted.org/iowa-long-term-drug-rehab.html", "Addicted.org", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.recovery.org/browse/Iowa/", "Recovery.org", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.drug-rehabs.org/Iowa-drug-rehab-alcohol-rehabs-program.htm", "Drug-rehabs.org", target = "_blank"),
+          br(),
+          tags$a(href = "https://idph.iowa.gov/mat", "Iowa Department of Public Health", target = "_blank")
         )
       )
     )
@@ -568,72 +495,20 @@ sources_ui = function(id) {
       fluidRow(
         style = "margin: 6px",
         width = 12,
-        column(12, align = "left",
-               h3(strong(title, " Data Methods")),
-               p(
-                 "Click on the sources to open links (where possible) from which the data was collected."
-               )
-        )
-      ),
-      fluidRow(
-        style = "margin: 6px",
-        width = 12,
         column(
-          6,
-          wellPanel(
-            strong('Hospitals'),
-            p(),
-            em('Source(s):'),
-            br(),
-            tags$a(href = "https://en.wikipedia.org/wiki/List_of_hospitals_in_Iowa", "Wikipedia list of Iowa hospitals"),
-            br(),
-            p(),
-            em("Methods:"),
-            br(),
-            p("Counted the number of hospitals by city.")
-          )
-        ),
-        column(
-          6,
-          wellPanel(
-            strong('Mental Health Centers'),
-            p(),
-            em('Source(s):'),
-            br(),
-            tags$a(href = "https://dhs.iowa.gov/sites/default/files/MHDDAccreditedProviders_32.pdf", "Iowa Department of Human Services"),
-            br(),
-            p(),
-            em("Methods:"),
-            br(),
-            p("Counted the number of mental health centers by city.")
-          )
-        ),
-        ## Second row of boxes (2 boxes)
-        fluidRow(
-          style = "margin: 6px",
-          width = 12,
-          column(6,
-                 wellPanel(
-                   strong('Rural Clinics'),
-                   p(),
-                   em('Source(s):'),
-                   br(),
-                   tags$a(href = "https://iarhc.org/find-a-rural-health-clinic?view=map", "Iowa Association of Rural Health Clinics"),
-                   br(),
-                   p(),
-                   em("Methods:"),
-                   br(),
-                   p("Counted the number of rural clinics by city.")
-                 )),
-          column(6,
-                 wellPanel(width = "500px",
-                   strong('Veterans Affairs Health Centers'),
-                   p(),
-                   em('Source(s):'),
-                   br(),
-                   tags$a(href = "https://www.va.gov/directory/guide/state.asp?STATE=IA&dnum=ALL", "U.S. Department of Veterans Affairs"),
-                 )
-          )
+          12,
+          align = "left",
+          h3(strong(title, " Website Links")),
+          p(
+            "Click on the links below to see the sources of the data."
+          ),
+          tags$a(href = "https://en.wikipedia.org/wiki/List_of_hospitals_in_Iowa", "Wikipedia list of Iowa hospitals", target = "_blank"),
+          br(),
+          tags$a(href = "https://dhs.iowa.gov/sites/default/files/MHDDAccreditedProviders_32.pdf", "Iowa Department of Human Services", target = "_blank"),
+          br(),
+          tags$a(href = "https://iarhc.org/find-a-rural-health-clinic?view=map", "Iowa Association of Rural Health Clinics", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.va.gov/directory/guide/state.asp?STATE=IA&dnum=ALL", "U.S. Department of Veterans Affairs", target = "_blank")
         )
       )
     )
@@ -643,135 +518,26 @@ sources_ui = function(id) {
       fluidRow(
         style = "margin: 6px",
         width = 12,
-        column(12, align = "left",
-               h3(strong(title, " Data Methods")),
-               p(
-                 "Click on the sources to open links (where possible) from which the data was collected."
-               )
-        )
-      ),
-      fluidRow(
-        style = "margin: 6px",
-        width = 12,
         column(
-          4,
-          wellPanel(
-            strong('Law Enforcement Offices'),
-            p(),
-            em('Source(s):'),
-            br(),
-            tags$a(href = "https://hifld-geoplatform.opendata.arcgis.com/datasets/local-law-enforcement-locations", "Homeland Infrastructure Foundation-Level Data")
-          )
-        ),
-        column(
-          4,
-          wellPanel(
-            strong('Colleges'),
-            p(),
-            em('Source(s):'),
-            br(),
-            tags$a(href = "https://en.wikipedia.org/wiki/List_of_colleges_and_universities_in_Iowa", "Wikipedia list of Iowa colleges and universities")
-          )
-        ),
-        column(
-          4,
-          wellPanel(
-            strong('Childcare Providers'),
-            p(),
-            em('Source(s):'),
-            br(),
-            tags$a(href = "http://ccmis.dhs.state.ia.us/ClientPortal/ProviderLocator.aspx", "Iowa Department of Human Services")
-          )
-        )
-      ),
-      fluidRow(
-        style = "margin: 6px",
-        width = 12,
-        column(
-          3,
-          wellPanel(
-            strong('Places of Worship'),
-            p(),
-            em('Source(s):'),
-            br(),
-            tags$a(href = "https://data.iowa.gov/Physical-Geography/Iowa-Church-Buildings/juvk-dad9", "USGS Geographic Names Information System")
-          )
-        ),
-        column(
-          3,
-          wellPanel(
-            strong('Workforce Development Offices'),
-            p(),
-            em('Source(s):'),
-            br(),
-            tags$a(href = "https://www.iowaworkforcedevelopment.gov/contact", "Iowa Workforce Development")
-          )
-        ),
-        column(
-          3,
-          wellPanel(
-            strong('Libraries'),
-            p(),
-            em('Source(s):'),
-            br(),
-            tags$a(href = "https://www.imls.gov/research-evaluation/data-collection/public-libraries-survey", 
-                   "Institute of Museum and Library Services, Public Libraries Survey")
-          )
-        ),
-        column(
-          3,
-          wellPanel(
-            strong('Parks'),
-            p(),
-            em('Source(s):'),
-            br(),
-            tags$a(href = "https://www.mycountyparks.com/County/Default.aspx", "MyCountyParks.com")
-          )
-        )
-      )
-    )
-    ## Demographic Characteristics
-  } else if(id == "demographic_characteristics"){
-    tagList(
-      fluidRow(
-        style = "margin: 6px",
-        width = 12,
-        column(12, align = "left",
-               h3(strong(title, " Data Methods")),
-               p(
-                 "Click on the sources to open links (where possible) from which the data was collected."
-               )
-        )
-      ),
-      fluidRow(
-        style = "margin: 6px",
-        width = 12,
-        column(
-          4,
-          wellPanel(
-            strong('Domain 1'),
-            p(),
-            em('Source(s):'),
-            br(),
-          )
-        ),
-        column(
-          4,
-          wellPanel(
-            strong('Domain 2'),
-            p(),
-            em('Source(s):'),
-            br(),
-          )
-        ),
-        column(
-          4,
-          wellPanel(
-            strong('Domain 3'),
-            p(),
-            em('Source(s):'),
-            br(),
-          )
+          12,
+          align = "left",
+          h3(strong(title, " Website Links")),
+          p(
+            "Click on the links below to see the sources of the data."
+          ),
+          tags$a(href = "https://hifld-geoplatform.opendata.arcgis.com/datasets/local-law-enforcement-locations", "Homeland Infrastructure Foundation-Level Data", target = "_blank"),
+          br(),
+          tags$a(href = "https://en.wikipedia.org/wiki/List_of_colleges_and_universities_in_Iowa", "Wikipedia list of Iowa colleges and universities", target = "_blank"),
+          br(),
+          tags$a(href = "http://ccmis.dhs.state.ia.us/ClientPortal/ProviderLocator.aspx", "Iowa Department of Human Services", target = "_blank"),
+          br(),
+          tags$a(href = "https://data.iowa.gov/Physical-Geography/Iowa-Church-Buildings/juvk-dad9", "USGS Geographic Names Information System", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.iowaworkforcedevelopment.gov/contact", "Iowa Workforce Development", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.imls.gov/research-evaluation/data-collection/public-libraries-survey", "Institute of Museum and Library Services, Public Libraries Survey", target = "_blank"),
+          br(),
+          tags$a(href = "https://www.mycountyparks.com/County/Default.aspx", "MyCountyParks.com", target = "_blank")
         )
       )
     )
@@ -781,42 +547,14 @@ sources_ui = function(id) {
       fluidRow(
         style = "margin: 6px",
         width = 12,
-        column(12, align = "left",
-               h3(strong(title, " Data Methods")),
-               p(
-                 "Click on the sources to open links (where possible) from which the data was collected."
-               )
-        )
-      ),
-      fluidRow(
-        style = "margin: 6px",
-        width = 12,
         column(
-          4,
-          wellPanel(
-            strong('Domain 1'),
-            p(),
-            em('Source(s):'),
-            br(),
-          )
-        ),
-        column(
-          4,
-          wellPanel(
-            strong('Domain 2'),
-            p(),
-            em('Source(s):'),
-            br(),
-          )
-        ),
-        column(
-          4,
-          wellPanel(
-            strong('Domain 3'),
-            p(),
-            em('Source(s):'),
-            br(),
-          )
+          12,
+          align = "left",
+          h3(strong(title, " Website Links")),
+          p(
+            "Click on the link below to see the sources of the data. Please inquire if you would like specific ACS table numbers."
+          ),
+          tags$a(href = "https://www.census.gov/programs-surveys/acs", "American Community Survey 2015/19 (5-year) Population Estimates", target = "_blank"),
         )
       )
     )
@@ -836,7 +574,6 @@ what_is_recovery_ui = function(id) {
         width = 10,
         offset = 1,
         h2(strong("What is Recovery?")),
-        h3(tags$a(href="rrci_report.pdf", "Click Here to Download RRCI Report", download=NA, target="_blank")),
         p(
           "Though substance use recovery is an evolving concept that has been defined in a number of ways over the years, 
           an emerging consensus is that recovery is a voluntary path toward improved personal wellbeing coupled with a diminished 
@@ -1293,7 +1030,159 @@ home_ui = function(id){
       column(
         width = 10,
         offset = 1,
-        h3(tags$a(href="rrci_report.pdf", "Click Here to Download RRCI Report", download=NA, target="_blank"))
+        h2(strong(em("Is Your Community Recovery Ready?"))),
+        h5("Every community in Iowa has the potential to promote recovery and resilience among its citizens. We have partnered with the 
+           Iowa Department of Public Health to better understand which Iowa communities are poised to join with national partners in building a 
+           Recovery Community Center (RCC) network to encourage, empower, and support people in recovery."),
+      )
+    ),
+    fluidRow(
+      style = "margin-left: 6px; margin-right: 6px",
+      width = 12,
+      column(
+        width = 6,
+        offset = 1,
+        h2(strong(em("Who are we?"))),
+        h5(
+          "The Public Science Collaborative is a university-based partnership of social and data scientists, clinicians, 
+           computer scientists, and outreach specialists. We work together to understand and address the grand challenges 
+           of our day by helping motivate data insights into action."
+        )
+      ),
+      column(
+        width = 5,
+        img(src = "psc_logo.png", class = "topimage", width = "425", height = "150", style = "display: block; margin-left: auto; margin-right: auto;")
+      )
+    ),
+    fluidRow(
+      style = "margin-left: 6px; margin-right: 6px",
+      width = 12,
+      column(
+        width = 10,
+        offset = 1,
+        h5("The content of this dashboard was created by PSC members",
+           em("Shawn Dorius, Cassandra Dorius, Elizabeth Talbert, Kelsey Van Selous, Ilma Jahic, Masoud Nosrati, and Matthew Voss.")),
+        h5("Dashboard and videos created by ", em("Matthew Voss", tags$a(href = "https://www.linkedin.com/in/voss-matthew/", ".", target = "_blank")))
+      )
+    ),
+    fluidRow(
+      style = "margin-left: 6px; margin-right: 6px",
+      width = 12,
+      column(
+        width = 6,
+        offset = 1,
+        h2(strong(em("Our trusted partners:"))),
+        h5(
+          "This work was made possible by the help and support of our state collaborators, Monica Wilke-Brown and Kevin Gabbert 
+          (Iowa Department of Public Health Bureau of Substance Abuse), who were instrumental in the design and implementation of this project."
+        )
+      ),
+      column(
+        width = 5,
+        img(src = "idph_logo.png", class = "topimage", width = "395", height = "150", style = "display: block; margin-left: auto; margin-right: auto;")
+      )
+    ),
+    fluidRow(
+      style = "margin-left: 6px; margin-right: 6px",
+      width = 12,
+      column(
+        width = 10,
+        offset = 1,
+        h5(
+          "We also appreciate and acknowledge the support of the following groups and individuals:"
+        ),
+        h5(
+          em(
+            "Linkage to Care Advisory Board: "
+          ),
+          "Todd Lange, Steve Arndt, Susie Sher, Kathy Tryen, Tammy Noble, Mindi Tennapel, Jennifer Husmann, Sarah Fineran, 
+          Katrina Carter, Julie Baker, Jennifer Nu, Jay Blakley, John Hallman, Daniel L Lewis, Christopher Vitek, 
+          Gagandeep Kaur Lamba, Monica Wilke-Brown, Sarah Vannice, Toby Yak, Jen Pearson, Catherine Lillehoj, Elizabeth Mcchesney, 
+          Patrick C McGovern, Liz Sweet, Moran Cein"
+        ),
+        h5(
+          em(
+            "Data Science for the Public Good Student & Faculty Support: "
+          ),
+          "Shawn Dorius, Cassandra Dorius, Heike Hofmann, Atefeh Rajabalizadeh, Kishor Sridhar, Jessie Bustin, Matthew Voss, 
+          Joel Von Behren, Andrew Maloney, Grant Durbahn, Vikram Magal, Kelsey Van Selous, & Masoud Nosrati"
+        )
+      )
+    ),
+    fluidRow(
+      style = "margin-left: 6px; margin-right: 6px",
+      width = 12,
+      column(
+        width = 10,
+        offset = 1,
+        h3(strong(em("Learn more about our study from these reports:"))), 
+        tags$a(
+          href = "rcc_executive_report.pdf", 
+          "CLICK HERE TO READ THE EXECUTIVE REPORT", 
+          target = "_blank",
+          style = "color: #BF0101"
+        ),
+        br(),
+        tags$a(
+          href = "rrci_report.pdf", 
+          "CLICK HERE TO LEARN ABOUT IOWA'S RECOVERY INDEX", 
+          target = "_blank",
+          style = "color: #BF0101"
+        ),
+        br(),
+        tags$a(
+          href = "rcc_qualitative_report.pdf", 
+          "CLICK HERE TO SEE ADVICE FROM NATIONAL LEADERS ABOUT BUILDING AN RCC IN IOWA", 
+          target = "_blank",
+          style = "color: #BF0101"
+        ),
+        br(),
+        h3(strong(em("Watch these videos to learn about using the dashboard:")))
+      ),
+    ),
+    fluidRow(
+      style = "margin-left: 6px; margin-right:6px",
+      width = 12,
+      column(
+        width = 2,
+        offset = 3,
+        h4(strong("Dashboard Overview")),
+        tags$video(src = "dashboard_overview.mp4", type = "video/mp4", controls = TRUE, width = "110%")
+      ),
+      column(
+        width = 2,
+        h4(strong("Maps")),
+        tags$video(src = "dashboard_maps.mp4", type = "video/mp4", controls = TRUE, width = "110%")
+      ),
+      column(
+        width = 2,
+        h4(strong("Tables and Sources")),
+        tags$video(src = "dashboard_tables.mp4", type = "video/mp4", controls = TRUE, width = "110%")
+      )
+    ),
+    fluidRow(
+      style = "margin-left: 6px; margin-right: 6px",
+      width = 12,
+      column(
+        width = 10,
+        offset = 1,
+        h2(strong(em("Funding:"))),
+        h5(
+          "This dashboard and related publications were made possible by funding from the Iowa Department of Public Health 
+          Substance Use Bureau, Centers for Disease Control, and Substance Use and Mental Health Services Administration. 
+          Dorius, S., Dorius, C., & Talbert, E. Advancing Substance Use Recovery in Iowa. 1/10/2020-9/29/2020. (Subaward $260,000). 
+          Its contents are solely the responsibility of the authors and do not necessarily represent the official views of the funding 
+          agencies or sponsors."
+        )
+      )
+    ),
+    fluidRow(
+      style = "margin-left: 6px; margin-right: 6px",
+      width = 12,
+      column(
+        width = 12,
+        align = "center",
+        img(src = "iowa_state_logo.jpg", class = "topimage", width = "200", height = "195", style = "display: block; margin-left: auto; margin-right: auto;")
       )
     )
   )
