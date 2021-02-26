@@ -1025,7 +1025,7 @@ home_ui = function(id){
   
   tagList(
     fluidRow(
-      style = "margin-left: 6px; margin-right: 6px",
+      style = "margin-left: auto; margin-right: auto",
       width = 12,
       column(
         width = 10,
@@ -1037,7 +1037,7 @@ home_ui = function(id){
       )
     ),
     fluidRow(
-      style = "margin-left: 6px; margin-right: 6px",
+      style = "margin-left: auto; margin-right: auto",
       width = 12,
       column(
         width = 6,
@@ -1055,7 +1055,7 @@ home_ui = function(id){
       )
     ),
     fluidRow(
-      style = "margin-left: 6px; margin-right: 6px",
+      style = "margin-left: auto; margin-right: auto",
       width = 12,
       column(
         width = 10,
@@ -1066,7 +1066,7 @@ home_ui = function(id){
       )
     ),
     fluidRow(
-      style = "margin-left: 6px; margin-right: 6px",
+      style = "margin-left: auto; margin-right: auto",
       width = 12,
       column(
         width = 6,
@@ -1083,7 +1083,7 @@ home_ui = function(id){
       )
     ),
     fluidRow(
-      style = "margin-left: 6px; margin-right: 6px",
+      style = "margin-left: auto; margin-right: auto",
       width = 12,
       column(
         width = 10,
@@ -1110,12 +1110,12 @@ home_ui = function(id){
       )
     ),
     fluidRow(
-      style = "margin-left: 6px; margin-right: 6px",
+      style = "margin-left: auto; margin-right: auto",
       width = 12,
       column(
         width = 10,
         offset = 1,
-        h3(strong(em("Learn more about our study from these reports:"))), 
+        h2(strong(em("Learn more about our study from these reports:"))), 
         tags$a(
           href = "rcc_executive_report.pdf", 
           "CLICK HERE TO READ THE EXECUTIVE REPORT", 
@@ -1137,11 +1137,11 @@ home_ui = function(id){
           style = "color: #BF0101"
         ),
         br(),
-        h3(strong(em("Watch these videos to learn about using the dashboard:")))
+        h2(strong(em("Watch these videos to learn about using the dashboard:")))
       ),
     ),
     fluidRow(
-      style = "margin-left: 6px; margin-right:6px",
+      style = "margin-left: auto; margin-right:auto",
       width = 12,
       column(
         width = 2,
@@ -1161,7 +1161,7 @@ home_ui = function(id){
       )
     ),
     fluidRow(
-      style = "margin-left: 6px; margin-right: 6px",
+      style = "margin-left: auto; margin-right: auto",
       width = 12,
       column(
         width = 10,
@@ -1177,12 +1177,16 @@ home_ui = function(id){
       )
     ),
     fluidRow(
-      style = "margin-left: 6px; margin-right: 6px",
+      style = "margin-left: auto; margin-right: auto",
       width = 12,
       column(
         width = 12,
+        #offset = 5,
         align = "center",
-        img(src = "iowa_state_logo.jpg", class = "topimage", width = "200", height = "195", style = "display: block; margin-left: auto; margin-right: auto;")
+        div(
+          img(src = "iowa_state_logo.jpg", class = "topimage", width = "200", height = "195", style = "display: block; margin-left: auto; margin-right: auto;"),
+          style = "text-align: center;"
+        )
       )
     )
   )
