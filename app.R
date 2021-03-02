@@ -242,7 +242,7 @@ ui = fluidPage(
              em('Iowa State University Public Science Collaborative')
            ),
            p(tags$small(
-             em('Last updated: February 2020')
+             em('Last Updated: March 2020')
            )))
   )
 )

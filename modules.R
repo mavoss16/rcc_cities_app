@@ -26,7 +26,13 @@ make_map = function(selection) {
   
   # mutate data for map bubbles
   fill_col = (fill_col - min(fill_col)) / (max(fill_col) - min(fill_col))
-  fill_col = (fill_col * 10) + 1
+  if(selection == "Recovery Ready Community Score" || selection == "Depth Ranking"){
+    fill_col = fill_col - 1
+    fill_col = (fill_col * 10 * -1) + 1
+  }
+  else{
+    fill_col = (fill_col * 10) + 1
+  }
   
   # make map
   rcc_city_data = rcc_city_data %>%
@@ -306,7 +312,7 @@ category_module_ui = function(id, category) {
   
   text = "The resulting maps will display the 30 Iowa cities considered for RCCs, with bubble sizes that correspond to the amount of the selected
   variable. Scroll over the bubbles to see the data and city names. Select the Data Table on the left to see the values for all 30 cities,
-  or the Data Methods tab to learn where we found the data."
+  or the Data Sources tab to learn where we found the data."
   
   category_title = stringr::str_replace_all(category, "_", " ") %>% tools::toTitleCase()
   if (category_title == "Rrci") {
@@ -1061,7 +1067,7 @@ home_ui = function(id){
         width = 10,
         offset = 1,
         h5("The content of this dashboard was created by PSC members",
-           em("Shawn Dorius, Cassandra Dorius, Elizabeth Talbert, Kelsey Van Selous, Ilma Jahic, Masoud Nosrati, and Matthew Voss.")),
+           em("Shawn Dorius, Cassandra Dorius, Elizabeth Talbert, Kelsey Van Selous, Ilma Jahic, Masoud Nosrati, Darien Bahe, Emma Young, and Matthew Voss.")),
         h5("Dashboard and videos created by ", em("Matthew Voss", tags$a(href = "https://www.linkedin.com/in/voss-matthew/", ".", target = "_blank")))
       )
     ),
