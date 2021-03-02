@@ -431,7 +431,7 @@ source_table_module_server = function(id) {
                })
 }
 
-## MAKE MODULES FOR SOURCES LINKS LIST ------------------------------------------------------------------------
+## MAKE MODULE FOR SOURCES LINKS LIST ------------------------------------------------------------------------
 ## Ideally, this should probably become a function.
 sources_ui = function(id) {
   ns = NS(id)
@@ -459,7 +459,7 @@ sources_ui = function(id) {
           br(),
           tags$a(href = "https://al-anon.org/al-anon-meetings/find-an-alateen-meeting/", "Al-Anon", target = "_blank"),
           br(),
-          tags$a(href = "http://draonline.qwknetllc.com/meetings_dra/usa/iowa.html", "Dual Recovery Anonymous", target = "_blank"),
+          tags$a(href = "https://draonline.qwknetllc.com/meetings_dra/usa/iowa.html", "Dual Recovery Anonymous", target = "_blank"),
           br(),
           tags$a(href = "https://www.nar-anon.org/", "Nar-Anon", target = "_blank"),
           br(),
@@ -475,9 +475,9 @@ sources_ui = function(id) {
           br(),
           tags$a(href = "https://www.census.gov/programs-surveys/acs", "American Community Survey 2014/18 (5-year) Population Estimates", target = "_blank"),
           br(),
-          tags$a(href = "https://iowa.maps.arcgis.com/apps/webappviewer/index.html?id=5377c6", "Iowa Office of Drug Control Policy", target = "_blank"),
+          tags$a(href = "https://odcp.iowa.gov/rxtakebacks", "Iowa Office of Drug Control Policy", target = "_blank"),
           br(),
-          tags$a(href = "https://idph.iowa.gov/Portals/1/userfiles/166/Licensure/All%", "Iowa Department of Public Health"),
+          tags$a(href = "https://idph.iowa.gov/Portals/1/userfiles/166/Licensure/All%20Licensed%20Substance%20Use%20Disorder%20-%20Problem%20Gambling%20Program%27s%20List.pdf", "Iowa Department of Public Health - SUD and Problem Gambling Treatment Locations"),
           br(),
           tags$a(href = "https://www.alltreatment.com/ia/accredited/", "AllTreatment.com", target = "_blank"),
           br(),
@@ -489,9 +489,9 @@ sources_ui = function(id) {
           br(),
           tags$a(href = "https://www.recovery.org/browse/Iowa/", "Recovery.org", target = "_blank"),
           br(),
-          tags$a(href = "https://www.drug-rehabs.org/Iowa-drug-rehab-alcohol-rehabs-program.htm", "Drug-rehabs.org", target = "_blank"),
+          tags$a(href = "https://www.drug-rehabs.org/Iowa-drug-rehab-alcohol-rehabs-program.html", "Drug-rehabs.org", target = "_blank"),
           br(),
-          tags$a(href = "https://idph.iowa.gov/mat", "Iowa Department of Public Health", target = "_blank")
+          tags$a(href = "https://idph.iowa.gov/mat", "Iowa Department of Public Health - Medication Assisted Treatment", target = "_blank")
         )
       )
     )
@@ -535,7 +535,7 @@ sources_ui = function(id) {
           br(),
           tags$a(href = "https://en.wikipedia.org/wiki/List_of_colleges_and_universities_in_Iowa", "Wikipedia list of Iowa colleges and universities", target = "_blank"),
           br(),
-          tags$a(href = "http://ccmis.dhs.state.ia.us/ClientPortal/ProviderLocator.aspx", "Iowa Department of Human Services", target = "_blank"),
+          tags$a(href = "https://ccmis.dhs.state.ia.us/ClientPortal/ProviderLocator.aspx", "Iowa Department of Human Services - Childcare Providers", target = "_blank"),
           br(),
           tags$a(href = "https://data.iowa.gov/Physical-Geography/Iowa-Church-Buildings/juvk-dad9", "USGS Geographic Names Information System", target = "_blank"),
           br(),
@@ -852,7 +852,7 @@ rrci_ui = function(id){
       )
     ),
     fluidRow(
-      style = "margin-left: 6px; margin-right: 6px",
+      style = "margin-left: auto; margin-right: auto",
       width = 12,
       column(
         width = 10, 
